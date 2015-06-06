@@ -31,8 +31,8 @@
             System.err.println("SQLException: " + ex.getMessage());
         }
 
-        mySQL = "SELECT si.showingid, m.moviename, TO_CHAR(si.starttime,'YYYY/MM/DD HH:MI:SS') starttime," +
-                "TO_CHAR(si.endtime,'YYYY/MM/DD HH:MI:SS') endtime, sm.theatertype " +
+        mySQL = "SELECT si.showingid, m.moviename, TO_CHAR(si.starttime,'YYYY/MM/DD HH24:MI:SS') starttime," +
+                "TO_CHAR(si.endtime,'YYYY/MM/DD HH24:MI:SS') endtime, sm.theatertype " +
                 "FROM SHOWING_INFO si " +
                 "INNER JOIN MOVIES m ON (si.MovieID = m.MovieID) " +
                 "INNER JOIN SCREEN_ROOM sm ON (si.RoomNumber = sm.RoomNumber)";

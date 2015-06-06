@@ -74,11 +74,11 @@
         if (myResultSet.next()) {
             String cID = myResultSet.getString("CustomerID");
             String cName = myResultSet.getString("Name");
-            String cGrade = myResultSet.getString("GradeID");
+            //String cGrade = myResultSet.getString("GradeID");
 
             session.setAttribute("cID", cID);
             session.setAttribute("cName", cName);
-            session.setAttribute("cGrade", cGrade);
+//            session.setAttribute("cGrade", cGrade);
             response.sendRedirect("main.jsp");
         }
     }
