@@ -6,7 +6,6 @@
     String userPassword = request.getParameter("userPassword");
 
     Connection myConn = null;
-    Statement stmt = null;
     String mySQL = null;
 
     String dburl  = "jdbc:oracle:thin:@210.94.199.20:1521:dblab";
@@ -16,56 +15,73 @@
 
     Class.forName(dbdriver);
     myConn =  DriverManager.getConnection (dburl, user, passwd);
-    stmt = myConn.createStatement();
 
     if(userType.equals("employee")) {
         mySQL = "SELECT * " +
                 "FROM EMPLOYEES " +
                 "WHERE EmployeeID = ? AND Password = ?";
 
-        ResultSet myResultSet = stmt.executeQuery(mySQL);
+        PreparedStatement pstmt = myConn.prepareStatement(mySQL);
+        pstmt.setString(1, userID);
+        pstmt.setString(2, userPassword);
+
+        ResultSet myResultSet = pstmt.executeQuery();
         if (myResultSet.next()) {
             String eID = myResultSet.getString("EmployeeID");
             String eName = myResultSet.getString("Name");
+            String eRole = myResultSet.getString("Role");
             session.setAttribute("eID", eID);
             session.setAttribute("eName", eName);
-            response.sendRedirect("employee_main.jsp");
+            session.setAttribute("eRole", eRole);
+            response.sendRedirect("admin_main.jsp");
         }
     }
     else if(userType.equals("member")) {
         mySQL = "SELECT *" +
                 "FROM MEMBERS" +
-                "WHERE MemberID = ? AND Password = ?";
+                "WHERE CustomerID = ? AND Password = ?";
 
-        ResultSet myResultSet = stmt.executeQuery(mySQL);
+        PreparedStatement pstmt = myConn.prepareStatement(mySQL);
+        pstmt.setString(1, userID);
+        pstmt.setString(2, userPassword);
+
+        ResultSet myResultSet = pstmt.executeQuery();
         if (myResultSet.next()) {
-            String eID = myResultSet.getString("MemberID");
-            String eName = myResultSet.getString("Name");
-            session.setAttribute("eID", eID);
-            session.setAttribute("eName", eName);
-            response.sendRedirect("employee_main.jsp");
+            String cID = myResultSet.getString("CustomerID");
+            String cName = myResultSet.getString("Name");
+            String cGrade = myResultSet.getString("MemberGrade");
+
+            session.setAttribute("cID", cID);
+            session.setAttribute("cName", cName);
+            session.setAttribute("cGrade", cGrade);
+            response.sendRedirect("main.jsp");
         }
     }
     else if(userType.equals("customer")) {
         mySQL = "SELECT * " +
                 "FROM CUSTOMERS " +
-                "WHERE PhoneNumber = ?";
-    }
+                "WHERE CustomerID = ?";
 
-    ResultSet myResultSet = stmt.executeQuery(mySQL);
-    if (myResultSet.next()) {
-        String userName = myResultSet.getString("s_name");
-        session.setAttribute("user", userID);
-        session.setAttribute("userName", userName);
-        response.sendRedirect("main.jsp");
-    } else {
+        PreparedStatement pstmt = myConn.prepareStatement(mySQL);
+        pstmt.setString(1, userID);
+
+        ResultSet myResultSet = pstmt.executeQuery();
+        if (myResultSet.next()) {
+            String cID = myResultSet.getString("CustomerID");
+            String cGrade = myResultSet.getString("MemberGrade");
+
+            session.setAttribute("cID", cID);
+            session.setAttribute("cName", cID); // 비회원은 고객번호로 대체
+            session.setAttribute("cGrade", cGrade);
+            response.sendRedirect("main.jsp");
+        }
+    }
 %>
 <script>
 	alert("사용자아이디 혹은 암호가 틀렸습니다");
     location.href = "login.jsp";
 </script>
 <%
-    }
     stmt.close();
     myConn.close();
 %>

@@ -1,3 +1,3 @@
 <script>
-    location.replace("login.jsp");
+    location.replace("main.jsp");
 </script>
