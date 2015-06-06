@@ -9,22 +9,15 @@
 <table width="75%"  align="center" bgcolor="#FFFF99" border>
     <tr>
         <td>
-            <div align="center"> 아이디와 패스워드를 입력하세요 </div>
+            <div align="center"> 관리자 인증 </div>
         </td>
     </tr>
 </table>
 <form method="post" action="login_verify.jsp">
+    <input type="hidden" name="userType" value="admin" />
     <table width="75%" align="center" border>
         <tr>
-            <td><div align="center">구분</div></td>
-            <td><div align="center">
-                <input type="radio" name="userType" value="employee" />직원
-                <input type="radio" name="userType" value="member" />회원
-                <input type="radio" name="userType" value="customer" />비회원
-            </div></td>
-        </tr>
-        <tr>
-            <td><div align="center">아이디/고객번호</div></td>
+            <td><div align="center">아이디</div></td>
             <td><div align="center"><input type="text" name="userID" /></div></td>
         </tr>
         <tr>
@@ -39,11 +32,6 @@
         </tr>
     </table>
 </form>
-
-<div align="center">
-    <a href="join.jsp">비회원 고객번호 발급</a><br />
-    <a href="find_customerid.jsp">비회원 고객번호 찾기</a><br />
-</div>
 
 </body>
 </html>
