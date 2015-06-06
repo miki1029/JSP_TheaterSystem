@@ -7,8 +7,6 @@
     String redirectURL = "login.jsp";
 
     Connection myConn = null;
-//    PreparedStatement pstmt = null;
-    Statement stmt = null;
     String mySQL = null;
 
     String dburl  = "jdbc:oracle:thin:@210.94.199.20:1521:dblab";
@@ -38,7 +36,7 @@
                 "ON (e.EmployeeID = a.EmployeeID) " +
                 "WHERE a.ID = '" + userID + "' AND a.Password = '" + userPassword + "'";
 
-        stmt = myConn.createStatement();
+        Statement stmt = myConn.createStatement();
 
         ResultSet myResultSet = stmt.executeQuery(mySQL);
 
@@ -49,8 +47,10 @@
             session.setAttribute("eName", eName);
             response.sendRedirect("admin_main.jsp");
         }
+        stmt.close();
     }
     else if(userType.equals("member")) {
+        redirectURL = "login.jsp";
         /*
         mySQL = "SELECT * " +
                 "FROM MEMBERS " +
@@ -67,7 +67,7 @@
                 "ON (c.CustomerID = m.CustomerID) " +
                 "WHERE m.ID = '" + userID + "' AND m.Password = '" + userPassword + "'";
 
-        stmt = myConn.createStatement();
+        Statement stmt = myConn.createStatement();
 
         ResultSet myResultSet = stmt.executeQuery(mySQL);
 
@@ -81,33 +81,33 @@
 //            session.setAttribute("cGrade", cGrade);
             response.sendRedirect("main.jsp");
         }
+        stmt.close();
     }
-//    else if(userType.equals("customer")) {
-//        mySQL = "SELECT * " +
-//                "FROM CUSTOMERS " +
-//                "WHERE CustomerID = ?";
-//
-//        PreparedStatement pstmt = myConn.prepareStatement(mySQL);
-//        pstmt.setString(1, userID);
-//
-//        ResultSet myResultSet = pstmt.executeQuery();
-//        if (myResultSet.next()) {
-//            String cID = myResultSet.getString("CustomerID");
-//            String cGrade = myResultSet.getString("MemberGrade");
-//
-//            session.setAttribute("cID", cID);
-//            session.setAttribute("cName", cID); // 비회원은 고객번호로 대체
+    else if(userType.equals("customer")) {
+        redirectURL = "nonmember_login.jsp";
+        mySQL = "SELECT * " +
+                "FROM CUSTOMERS " +
+                "WHERE PhoneNumber = '" + userID + "' AND GradeID = 0";
+
+        Statement stmt = myConn.createStatement();
+
+        ResultSet myResultSet = stmt.executeQuery(mySQL);
+        if (myResultSet.next()) {
+            String cID = myResultSet.getString("CustomerID");
+//            String cGrade = myResultSet.getString("GradeID");
+
+            session.setAttribute("cID", cID);
+            session.setAttribute("cName", userID); // 비회원은 전화번호로 대체
 //            session.setAttribute("cGrade", cGrade);
-//            response.sendRedirect("main.jsp");
-//        }
-//    }
+            response.sendRedirect("showing_list.jsp");
+        }
+        stmt.close();
+    }
 %>
 <script>
 	alert("사용자 아이디 혹은 암호가 틀렸습니다");
     location.href = "<%=redirectURL%>";
 </script>
 <%
-//    pstmt.close();
-    stmt.close();
     myConn.close();
 %>
