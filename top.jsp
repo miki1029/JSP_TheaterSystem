@@ -2,7 +2,7 @@
 <%
     String session_cid = (String)session.getAttribute("cID");
     String session_cname = (String)session.getAttribute("cName");
-    //String session_cgrade = (String)session.getAttribute("cGrade");
+    String session_cgrade = (String)session.getAttribute("cGrade");
 
     String log;
     if (session_cid==null)

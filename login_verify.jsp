@@ -21,6 +21,7 @@
     Class.forName(dbdriver);
     myConn =  DriverManager.getConnection (dburl, user, passwd);
 
+    // admin
     if(userType.equals("admin")) {
         loginURL = "admin_login.jsp";
 
@@ -42,6 +43,7 @@
         }
         stmt.close();
     }
+    // member
     else if(userType.equals("member")) {
         loginURL = "login.jsp";
 
@@ -57,9 +59,11 @@
         if (myResultSet.next()) {
             String cID = myResultSet.getString("CustomerID");
             String cName = myResultSet.getString("Name");
+            String cGrade = myResultSet.getString("GradeID");
 
             session.setAttribute("cID", cID);
             session.setAttribute("cName", cName);
+            session.setAttribute("cGrade", cGrade);
             response.sendRedirect("main.jsp");
         }
         stmt.close();
@@ -76,9 +80,11 @@
         // 로그인 한 적이 있는 고객
         if (myResultSet.next()) {
             String cID = myResultSet.getString("CustomerID");
+            String cGrade = myResultSet.getString("GradeID");
 
             session.setAttribute("cID", cID);
             session.setAttribute("cName", userID); // 비회원은 전화번호로 대체
+            session.setAttribute("cGrade", cGrade);
             response.sendRedirect(redirectURL);
         }
         // 첫 방문 고객
@@ -96,9 +102,11 @@
             ResultSet myResultSet3 = stmt3.executeQuery(mySQL);
             if (myResultSet3.next()) {
                 String cID = myResultSet3.getString("CustomerID");
+                String cGrade = myResultSet.getString("GradeID");
 
                 session.setAttribute("cID", cID);
                 session.setAttribute("cName", userID); // 비회원은 전화번호로 대체
+                session.setAttribute("cGrade", cGrade);
                 response.sendRedirect(redirectURL);
             }
             stmt3.close();

@@ -5,10 +5,10 @@
 <body>
 <%@ include file="top.jsp" %>
 <%
-if (session_cid==null) {
+if (session_cgrade == null || session_cgrade.equals("0")) {
 %>
 <script>
-    alert("먼저 로그인 해주세요.");
+    alert("회원 전용입니다.");
     location.href = "main.jsp";
 </script>
 <%
