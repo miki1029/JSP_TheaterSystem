@@ -52,7 +52,7 @@
 
 
 <table width="75%" align="center" border>
-    <tr><th>직원 ID</th>
+    <tr><th width="150">직원 ID</th>
         <td><%= s_ID %></td>
     </tr>
     <tr><th>이름</th>
@@ -108,7 +108,7 @@
 %>
 
 <table width="75%" align="center" border>
-    <tr><th>직원 ID</th>
+    <tr><th width="150">직원 ID</th>
         <td><%= t_ID %></td>
     </tr>
     <tr><th>이름</th>
@@ -160,7 +160,7 @@
 %>
 
 <table width="75%" align="center" border>
-    <tr><th>직원 ID</th>
+    <tr><th width="150">직원 ID</th>
         <td><%= c_ID %></td>
     </tr>
     <tr><th>이름</th>

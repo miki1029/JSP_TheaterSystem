@@ -43,17 +43,24 @@ else {
 
 	myResultSet = stmt.executeQuery(mySQL);
 	if (myResultSet.next()) {
-		String m_ID = myResultSet.getString("ID");
-		String m_pwd = myResultSet.getString("Password");
-		String m_name = myResultSet.getString("Name");
-		String m_sex = myResultSet.getString("Sex");
+		String m_ID = myResultSet.getString("ID").trim();
+		String m_pwd = myResultSet.getString("Password").trim();
+		String m_name = myResultSet.getString("Name").trim();
+		String m_sex = myResultSet.getString("Sex").trim();
 		Date m_birth = myResultSet.getDate("Birthdate");
-		String m_email = myResultSet.getString("Email");
-        String m_phone = myResultSet.getString("PhoneNumber");
+		String m_email = myResultSet.getString("Email").trim();
+        String m_phone = myResultSet.getString("PhoneNumber").trim();
 		Date m_rgDate = myResultSet.getDate("RegisterDate");
-        String m_grade = myResultSet.getString("GradeName");
+        String m_grade = myResultSet.getString("GradeName").trim();
 		int m_point = myResultSet.getInt("Point");
-		
+        String isCheckedm = "";
+        String isCheckedf = "";
+
+        if(m_sex.equals("m")) {
+            isCheckedm = " checked='checked'";
+        } else {
+            isCheckedf = " checked='checked'";
+        }
 %>
 
 <form method="post" action="customer_update_verify.jsp">
@@ -65,27 +72,30 @@ else {
         </tr>
         <tr>
             <th>패스워드</th>
-            <td><input type="password" name="m_pwd" size="20"  value=""></td>
+            <td><input type="password" name="m_pwd" value="<%=m_pwd%>"></td>
         </tr>
         <tr>
             <th>이름</th>
-            <td><input type="text" name="m_name" size="50" value="<%= m_name %>"> </td>
+            <td><%= m_name %></td>
         </tr>
         <tr>
             <th>성별</th>
-            <td><input type="text" name="m_sex" size="50" value="<%= m_sex %>"> </td>
+            <td>
+                <input type="radio" name="m_sex" value="m"<%=isCheckedm%>>남자
+                <input type="radio" name="m_sex" value="f"<%=isCheckedf%>>여자
+            </td>
         </tr>
         <tr>
             <th>생일</th>
-            <td><input type="text" name="m_birth" size="50" value="<%= m_birth %>"> </td>
+            <td><%= m_birth %></td>
         </tr>
         <tr>
             <th>이메일 주소</th>
-            <td><input type="text" name="m_email" size="50" value="<%= m_email %>"> </td>
+            <td><input type="text" name="m_email" value="<%= m_email %>"> </td>
         </tr>
         <tr>
             <th>연락처</th>
-            <td><input type="text" name="m_email" size="50" value="<%= m_phone %>"> </td>
+            <td><%= m_phone %></td>
         </tr>
         <tr>
             <th>등록일</th>
@@ -93,7 +103,7 @@ else {
         </tr>
         <tr>
             <th>회원 등급</th>
-            <td><%=m_grade%> (<%= m_point %>)점</td>
+            <td><%=m_grade%> (<%= m_point %>점)</td>
         </tr>
  
 			   

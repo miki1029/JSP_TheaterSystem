@@ -54,7 +54,7 @@
 
 
 <table width="75%" align="center" border>
-    <tr><th>고객 식별ID</th>
+    <tr><th width="150">고객 식별ID</th>
         <td><%= m_CID %></td>
     </tr>
     <tr><th>고객 회원ID</th>
@@ -106,7 +106,7 @@
 %>
 
 <table width="75%" align="center" border>
-    <tr><th>고객 ID</th>
+    <tr><th width="150">고객 ID</th>
         <td><%= c_ID %></td>
     </tr>
     <tr><th>전화번호</th>

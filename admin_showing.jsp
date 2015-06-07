@@ -12,7 +12,8 @@
         <th>시작 시간</th>
         <th>종료 시간</th>
         <th>상영관</th>
-        <th>예매</th>
+        <th>수정</th>
+        <th>삭제</th>
     </tr>
 
     <%
@@ -30,18 +31,6 @@
         } catch(SQLException ex) {
             System.err.println("SQLException: " + ex.getMessage());
         }
-
-//        mySQL = "select * from course where c_id not in " +
-//                "(select c_id from enroll where s_id = ? or " +
-//                "e_year != '2015' or e_semester != '2') " +
-//                "and c_id in " +
-//                "(select c_id from teach where t_year = '2015' and t_semester = '2')";
-
-//        PreparedStatement pstmt = myConn.prepareStatement(mySQL);
-//        // session_id String
-//        pstmt.setString(1, session_cid);
-//
-//        myResultSet = pstmt.executeQuery();
 
         mySQL = "SELECT si.showingid, m.moviename, " +
                 "TO_CHAR(si.starttime,'YYYY/MM/DD HH24:MI:SS') starttime, " +
@@ -71,8 +60,13 @@
         <td align="center"><%=endTime%></td>
         <td align="center"><%=theaterType%> <%=roomNumber%>관</td>
         <td align="center">
-            <a href="reserve.jsp?showingID=<%=showingID%>">
-                예매
+            <a href="admin_showing_modify.jsp?showingID=<%=showingID%>">
+                수정
+            </a>
+        </td>
+        <td align="center">
+            <a href="admin_showing_delete.jsp?showingID=<%=showingID%>">
+                삭제
             </a>
         </td>
     </tr>
@@ -82,6 +76,13 @@
         stmt.close();
         myConn.close();
     %>
+    <tr>
+        <td colspan="6" align="center">
+            <a href="admin_showing_insert.jsp">
+                추가
+            </a>
+        </td>
+    </tr>
 </table>
 
 </body>
