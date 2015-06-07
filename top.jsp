@@ -17,8 +17,8 @@
         <td align="center"><b><a href="showing_list.jsp">영화 예매</a></b></td>
         <td align="center"><b><a href="reserve_cancel.jsp">예매 취소</a></b></td>
         <td align="center"><b><a href="reserve_select.jsp">예매 내역 조회</a></b></td>
-        <td align="center"><b><a href="customer_update.jsp">사용자 정보 수정</a></b></td>
+        <td align="center"><b><a href="customer_update.jsp">고객정보 수정</a></b></td>
         <td align="center"><b><a href="admin_login.jsp">관리자 페이지</a></b></td>
     </tr>
 </table>
-<br />
+<br/>
