@@ -6,12 +6,10 @@
 </head>
 <body>
 <%@ include file="top.jsp" %>
-<table width="75%" align="center" border>
-    <%
+<%
     int showingID = Integer.parseInt(request.getParameter("showingID"));
     int row = Integer.parseInt(request.getParameter("row"));
     int column = Integer.parseInt(request.getParameter("column"));
-    int price = Integer.parseInt(request.getParameter("price"));
 
     Connection myConn = null;
     ResultSet myResultSet = null;
@@ -27,59 +25,56 @@
         System.err.println("SQLException: " + ex.getMessage());
     }
 
-    String mySQL =
-        "SELECT * " +
-        "FROM EMPLOYEES e INNER JOIN ADMIN a " +
-        "ON (e.EmployeeID = a.EmployeeID) " +
-        "WHERE a.ID = '" + userID + "' AND a.Password = '" + userPassword + "'";
+    // get price
+    CallableStatement cstmt3 = myConn.prepareCall("{call getSecondPrice(?, ?, ?, ?, ?, ?, ?)}");
+    cstmt3.setInt(1, showingID);
+    cstmt3.setInt(2, Integer.parseInt(session_cid));
+    cstmt3.registerOutParameter(3, java.sql.Types.INTEGER);
+    cstmt3.registerOutParameter(4, java.sql.Types.INTEGER);
+    cstmt3.registerOutParameter(5, java.sql.Types.INTEGER);
+    cstmt3.registerOutParameter(6, java.sql.Types.INTEGER);
+    cstmt3.registerOutParameter(7, java.sql.Types.INTEGER);
 
-    Statement stmt = myConn.createStatement();
+    cstmt3.execute();
 
-    ResultSet myResultSet = stmt.executeQuery(mySQL);
+    int finalPrice = cstmt3.getInt(3);
+    int roomPrice = cstmt3.getInt(4);
+    int memberDiscount = cstmt3.getInt(5);
+    int timeDiscount = cstmt3.getInt(6);
+    int holidayExtra = cstmt3.getInt(7);
 
-    if (myResultSet.next()) {
-        String eID = myResultSet.getString("EmployeeID");
-        String eName = myResultSet.getString("Name");
-        session.setAttribute("eID", eID);
-        session.setAttribute("eName", eName);
-        response.sendRedirect("admin_main.jsp");
-    }
-    stmt.close();
-
+    cstmt3.close();
 
     // insert ticket
     // point up
     // grade up
 
-    CallableStatement cstmt = myConn.prepareCall("{call InsertTicket(?, ?, ?, ?, ?, ?)}");
-    cstmt.setString(1, c_id);
-    cstmt.setInt(2, c_id_no);
-    cstmt.setInt(3, t_year);
-    cstmt.setInt(4, t_semester);
-    cstmt.registerOutParameter(5, java.sql.Types.NUMERIC);
-    cstmt.registerOutParameter(6, java.sql.Types.NUMERIC);
+    CallableStatement cstmt = myConn.prepareCall("{call InsertTicket(?, ?, ?, ?, ?)}");
+    cstmt.setInt(1, Integer.parseInt(session_cid));
+    cstmt.setInt(2, column);
+    cstmt.setInt(3, row);
+    cstmt.setInt(4, showingID);
+    cstmt.setInt(5, finalPrice);
 
-    try {
+    //try {
         cstmt.execute();
-        resultTMax = cstmt.getInt(5);
-        resultTDiff = cstmt.getInt(6);
 %>
-    <script>
-        alert("모집인원은 <%=resultTMax%>명이며, 현재 수강 신청을 할 수 있는 인원은 <%=resultTDiff%>명 입니다.");
-        location.href="insert.jsp";
-    </script>
-        <%
-    } catch(SQLException ex) {
-        System.err.println("SQLException: " + ex.getMessage());
-    } finally {
-        if(cstmt != null) {
-            try {
+<script>
+    alert("예매가 완료되었습니다.");
+    location.href="reserve_list.jsp";
+</script>
+<%
+//    } catch(SQLException ex) {
+//        System.err.println("SQLException: " + ex.getMessage());
+//    } finally {
+//        if(cstmt != null) {
+//            try {
                 myConn.commit();
                 cstmt.close();
                 myConn.close();
-            } catch(SQLException ex) { }
-        }
-    }
+//            } catch(SQLException ex) { }
+//        }
+//    }
 %>
 </body>
 </html>

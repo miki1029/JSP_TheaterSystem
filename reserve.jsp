@@ -65,7 +65,8 @@ else {
             int result = cstmt2.getInt(4);
             String seatLink = null;
             if(result == 0) {
-                seatLink = "<a href='reserve_verify.jsp?row=" + row + "&column=" + column + "'>" +
+                seatLink = "<a href='reserve_verify.jsp?showingID=" + showingID +
+                        "&row=" + row + "&column=" + column + "'>" +
                         "[" + row + "," + column + "]</a>";
             }
             else {
@@ -84,7 +85,7 @@ else {
 </table>
 
 <%
-    // get room seats size
+    // get price
     CallableStatement cstmt3 = myConn.prepareCall("{call getSecondPrice(?, ?, ?, ?, ?, ?, ?)}");
     cstmt3.setInt(1, showingID);
     cstmt3.setInt(2, Integer.parseInt(session_cid));
