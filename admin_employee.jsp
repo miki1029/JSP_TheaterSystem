@@ -7,8 +7,6 @@
 <body>
 <%@ include file="admin_top.jsp" %>
 <%
-    if (session_eid==null) response.sendRedirect("login.jsp");
-
     Connection myConn = null;
     Statement stmt = null;
     ResultSet myResultSet = null;
@@ -27,13 +25,16 @@
         System.err.println("SQLException: " + ex.getMessage());
     }
     mySQL = "SELECT * " +
-            "FROM EMPLOYEES e INNER JOIN SCREEN_ROOM_MANAGER s " +
+            "FROM EMPLOYEES e " +
+            "INNER JOIN SCREEN_ROOM_MANAGER s " +
             "ON (e.EmployeeID = s.EmployeeID) " +
+            "INNER JOIN SCREEN_ROOM sr " +
+            "ON (s.RoomNumber = sr.RoomNumber) " +
             "WHERE e.Role = 'screen_room_manager'";
 
     myResultSet = stmt.executeQuery(mySQL);
 %>
-<h2 align="center">*****스크린 관리요원*****</h2>
+<h2 align="center">*****상영관 관리 직원*****</h2>
 <%
 
     if (myResultSet != null) {
@@ -46,6 +47,7 @@
             String s_position = myResultSet.getString("Position");
             String s_phone = myResultSet.getString("PhoneNumber");
             int s_roomnum = myResultSet.getInt("RoomNumber");
+            String s_roomtype = myResultSet.getString("TheaterType");
 %>
 
 
@@ -71,6 +73,9 @@
     <tr><th>직급</th>
         <td><%= s_position %></td>
     </tr>
+    <tr><th>관리 상영관</th>
+        <td><%= s_roomtype %> <%= s_roomnum %>관</td>
+    </tr>
 </table>
 <br />
 <%
@@ -78,8 +83,11 @@
 	}
 
 	mySQL = "SELECT * " +
-            "FROM EMPLOYEES e INNER JOIN TICKET_SELLER t " +
+            "FROM EMPLOYEES e " +
+            "INNER JOIN TICKET_SELLER t " +
             "ON (e.EmployeeID = t.EmployeeID) " +
+            "INNER JOIN TICKETBOX tb " +
+            "ON (t.TicketboxID = tb.TicketboxID) " +
             "WHERE e.Role = 'ticket_seller'";
 			
 	myResultSet = stmt.executeQuery(mySQL);
@@ -88,15 +96,15 @@
 <%
 	if (myResultSet != null) {
 		while(myResultSet.next()) {
-		int t_ID = myResultSet.getInt("EmployeeID");
-		String t_name = myResultSet.getString("Name");
-		String t_sex = myResultSet.getString("Sex");
-		Date t_hdate = myResultSet.getDate("HireDate");
-		String t_role = myResultSet.getString("Role");
-		String t_position = myResultSet.getString("Position");
-		String t_phone = myResultSet.getString("PhoneNumber");
-		int t_tbox = myResultSet.getInt("TicketboxID");
-
+            int t_ID = myResultSet.getInt("EmployeeID");
+            String t_name = myResultSet.getString("Name");
+            String t_sex = myResultSet.getString("Sex");
+            Date t_hdate = myResultSet.getDate("HireDate");
+            String t_role = myResultSet.getString("Role");
+            String t_position = myResultSet.getString("Position");
+            String t_phone = myResultSet.getString("PhoneNumber");
+            int t_tbox = myResultSet.getInt("TicketboxID");
+            String t_type = myResultSet.getString("Type");
 %>
 
 <table width="75%" align="center" border>
@@ -120,6 +128,9 @@
     </tr>
     <tr><th>직급</th>
         <td><%= t_position %></td>
+    </tr>
+    <tr><th>담당 창구</th>
+        <td><%= t_type %> <%= t_tbox %></td>
     </tr>
 </table>
 <br />
@@ -169,6 +180,9 @@
     </tr>
     <tr><th>직급</th>
         <td><%= c_position %></td>
+    </tr>
+    <tr><th>담당 구역</th>
+        <td><%= c_dist %></td>
     </tr>
 </table>
 <br />

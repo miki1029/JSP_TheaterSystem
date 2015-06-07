@@ -1,78 +1,108 @@
-<%@ page import="java.sql.*" %>
 <%@ page contentType="text/html; charset=utf-8" pageEncoding="utf-8" %>
+<%@ page import="java.sql.*"  %>
 <html>
 <head>
     <title>WooDrims 영화관</title>
 </head>
 <body>
 <%@ include file="admin_top.jsp" %>
-<table width="75%" align="center" border>
-    <tr>
-        <th></th>
-        <th>분반</th>
-        <th>과목명</th>
-        <th>학점</th>
-        <th>수강신청</th>
-    </tr>
+<%
+    Connection myConn = null;
+    Statement stmt = null;
+    ResultSet myResultSet = null;
+    String mySQL = "";
 
-    <%
-        Connection myConn = null;
-        ResultSet myResultSet = null;
-        String mySQL = "";
-        String dburl = "jdbc:oracle:thin:@210.94.199.20:1521:DBLAB";
-        String user = "ST2009111979";
-        String passwd = "ST2009111979";
-        String dbdriver = "oracle.jdbc.driver.OracleDriver";
+    String dburl  = "jdbc:oracle:thin:@210.94.199.20:1521:dblab";
+    String user="ST2009111979"; 		  // 본인 아이디(ex.ST0000000000)
+    String passwd="ST2009111979";   // 본인 패스워드(ex.ST0000000000)
+    String dbdriver = "oracle.jdbc.driver.OracleDriver";
 
-        try {
-            Class.forName(dbdriver);
-            myConn = DriverManager.getConnection(dburl, user, passwd);
-        } catch(SQLException ex) {
-            System.err.println("SQLException: " + ex.getMessage());
-        }
+    try {
+        Class.forName(dbdriver);
+        myConn =  DriverManager.getConnection (dburl, user, passwd);
+        stmt = myConn.createStatement();
+    } catch(SQLException ex) {
+        System.err.println("SQLException: " + ex.getMessage());
+    }
 
-//    mySQL = "select * from course";
+    mySQL = "SELECT * " +
+            "FROM MOVIES m " +
+            "INNER JOIN MOVIES_GENRE mg " +
+            "ON (m.MovieID = mg.MovieID) " +
+            "INNER JOIN GENRE g " +
+            "ON (mg.GenreID = g.GenreID) ";
 
-        mySQL = "select * from course where c_id not in " +
-                "(select c_id from enroll where s_id = ? or " +
-                "e_year != '2015' or e_semester != '2') " +
-                "and c_id in " +
-                "(select c_id from teach where t_year = '2015' and t_semester = '2')";
+    myResultSet = stmt.executeQuery(mySQL);
 
-        PreparedStatement pstmt = myConn.prepareStatement(mySQL);
-        // session_id String
-        pstmt.setString(1, session_eid);
+    if (myResultSet != null) {
+        while(myResultSet.next()) {
+            int movieID = myResultSet.getInt("MovieID");
+            String movieName = myResultSet.getString("MovieName");
+            String director = myResultSet.getString("Director");
+            String mainActor = myResultSet.getString("MainActor");
+            String synopsis = myResultSet.getString("Synopsis");
+            int runningTime = myResultSet.getInt("RunningTime");
+            int movieGrade = myResultSet.getInt("MovieGrade");
+            String releasedDate = myResultSet.getString("ReleasedDate");
+            String expiredDate = myResultSet.getString("ExpiredDate");
+            String genre = "";
 
-        myResultSet = pstmt.executeQuery();
+            Statement stmt2 = myConn.createStatement();
 
-        if(myResultSet != null) {
-            while(myResultSet.next()) {
-                String c_id = myResultSet.getString("c_id");
-                int c_id_no = myResultSet.getInt("c_id_no");
-                String c_name = myResultSet.getString("c_name");
-                int c_unit = myResultSet.getInt("c_unit");
-    %>
-    <tr>
-        <td align="center"><%=c_id%></td>
-        <td align="center"><%=c_id_no%></td>
-        <td align="center">
-            <a href="insert_course_info.jsp?c_id=<%=c_id%>&c_id_no=<%=c_id_no%>&t_year=2015&t_semester=2">
-                <%=c_name%>
-            </a>
-        </td>
-        <td align="center"><%=c_unit%></td>
-        <td align="center">
-            <a href="insert_verify.jsp?c_id=<%=c_id%>&c_id_no=<%=c_id_no%>">
-                신청
-            </a>
-        </td>
-    </tr>
-    <%
+            String mySQL2 = "SELECT * " +
+                    "FROM MOVIES_GENRE mg " +
+                    "INNER JOIN Genre g ON (mg.GenreID = g.GenreID) " +
+                    "WHERE MovieID = " + movieID;
+
+            ResultSet genreResultSet = stmt2.executeQuery(mySQL2);
+
+            while(genreResultSet.next()) {
+                genre += genreResultSet.getString("GenreName") + " ";
             }
-        }
-        pstmt.close();
-        myConn.close();
-    %>
+            stmt2.close();
+%>
+
+
+<table width="75%" align="center" border>
+    <tr><th width="100px">영화 제목</th>
+        <td><%= movieName %></td>
+    </tr>
+    <tr><th>감독</th>
+        <td> <%= director %></td>
+    </tr>
+    <tr><th>주연 배우</th>
+        <td> <%= mainActor %></td>
+    </tr>
+    <tr><th>줄거리</th>
+        <td> <%= synopsis %></td>
+    </tr>
+    <tr><th>상영 시간</th>
+        <td><%= runningTime %> 분</td>
+    </tr>
+    <tr><th>등급</th>
+        <td><%= movieGrade %>세 이상</td>
+    </tr>
+    <tr><th>개봉일</th>
+        <td><%= releasedDate %></td>
+    </tr>
+    <tr><th>종영일</th>
+        <td><%= expiredDate %></td>
+    </tr>
+    <tr><th>장르</th>
+        <td><%=genre%></td>
+    </tr>
 </table>
-</body>
-</html>
+
+<br />
+
+<%
+        }
+    }
+
+    stmt.close();
+    myConn.close();
+%>
+
+<%--<input type="submit" value="수정">--%>
+
+</body></html>
