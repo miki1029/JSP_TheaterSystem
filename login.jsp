@@ -33,5 +33,11 @@
     </table>
 </form>
 
+<div align="center">
+    <a href="join.jsp">
+        회원가입
+    </a>
+</div>
+
 </body>
 </html>
