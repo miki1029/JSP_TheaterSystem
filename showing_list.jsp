@@ -31,15 +31,6 @@
             System.err.println("SQLException: " + ex.getMessage());
         }
 
-        mySQL = "SELECT si.showingid, m.moviename, " +
-                "TO_CHAR(si.starttime,'YYYY/MM/DD HH24:MI:SS') starttime, " +
-                "TO_CHAR(si.endtime,'YYYY/MM/DD HH24:MI:SS') endtime, " +
-                "sm.theatertype, sm.roomnumber " +
-                "FROM SHOWING_INFO si " +
-                "INNER JOIN MOVIES m ON (si.MovieID = m.MovieID) " +
-                "INNER JOIN SCREEN_ROOM sm ON (si.RoomNumber = sm.RoomNumber) " +
-                "ORDER BY starttime";
-
 //        mySQL = "select * from course where c_id not in " +
 //                "(select c_id from enroll where s_id = ? or " +
 //                "e_year != '2015' or e_semester != '2') " +
@@ -51,6 +42,15 @@
 //        pstmt.setString(1, session_cid);
 //
 //        myResultSet = pstmt.executeQuery();
+
+        mySQL = "SELECT si.showingid, m.moviename, " +
+                "TO_CHAR(si.starttime,'YYYY/MM/DD HH24:MI:SS') starttime, " +
+                "TO_CHAR(si.endtime,'YYYY/MM/DD HH24:MI:SS') endtime, " +
+                "sm.theatertype, sm.roomnumber " +
+                "FROM SHOWING_INFO si " +
+                "INNER JOIN MOVIES m ON (si.MovieID = m.MovieID) " +
+                "INNER JOIN SCREEN_ROOM sm ON (si.RoomNumber = sm.RoomNumber) " +
+                "ORDER BY starttime";
 
         Statement stmt = myConn.createStatement();
         myResultSet = stmt.executeQuery(mySQL);
@@ -79,7 +79,6 @@
     <%
             }
         }
-//        pstmt.close();
         stmt.close();
         myConn.close();
     %>

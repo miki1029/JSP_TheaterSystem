@@ -7,9 +7,8 @@
 <body>
 <%@ include file="top.jsp" %>
 <%
-    int showingID = Integer.parseInt(request.getParameter("showingID"));
-    int row = Integer.parseInt(request.getParameter("row"));
-    int column = Integer.parseInt(request.getParameter("column"));
+    int ticketID = Integer.parseInt(request.getParameter("ticketID"));
+    int showingID = 0;
 
     Connection myConn = null;
     String dburl = "jdbc:oracle:thin:@210.94.199.20:1521:DBLAB";
@@ -22,6 +21,19 @@
         myConn = DriverManager.getConnection(dburl, user, passwd);
     } catch(SQLException ex) {
         System.err.println("SQLException: " + ex.getMessage());
+    }
+
+    // showingid
+    String mySQL =
+            "SELECT showingid " +
+            "FROM TICKET " +
+            "WHERE ticketid = '" + ticketID +"'";
+
+    Statement stmt = myConn.createStatement();
+    ResultSet myResultSet = stmt.executeQuery(mySQL);
+
+    if(myResultSet.next()){
+        showingID = myResultSet.getInt("showingid");
     }
 
     // get price
@@ -48,32 +60,21 @@
     // point up
     // grade up
 
-    CallableStatement cstmt = myConn.prepareCall("{call InsertTicket(?, ?, ?, ?, ?)}");
+    CallableStatement cstmt = myConn.prepareCall("{call DeleteTicket(?, ?, ?)}");
     cstmt.setInt(1, Integer.parseInt(session_cid));
-    cstmt.setInt(2, column);
-    cstmt.setInt(3, row);
-    cstmt.setInt(4, showingID);
-    cstmt.setInt(5, finalPrice);
+    cstmt.setInt(2, ticketID);
+    cstmt.setInt(3, finalPrice);
 
-    //try {
-        cstmt.execute();
+    cstmt.execute();
 %>
 <script>
-    alert("예매가 완료되었습니다.");
+    alert("예매가 취소되었습니다.");
     location.href="reserve_list.jsp";
 </script>
 <%
-//    } catch(SQLException ex) {
-//        System.err.println("SQLException: " + ex.getMessage());
-//    } finally {
-//        if(cstmt != null) {
-//            try {
-                myConn.commit();
-                cstmt.close();
-                myConn.close();
-//            } catch(SQLException ex) { }
-//        }
-//    }
+    myConn.commit();
+    cstmt.close();
+    myConn.close();
 %>
 </body>
 </html>
