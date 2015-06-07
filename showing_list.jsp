@@ -6,7 +6,7 @@
 </head>
 <body>
 <%@ include file="top.jsp" %>
-<table width="75%" align="center" border>
+<table width="85%" align="center" border>
     <tr>
         <th>영화 제목</th>
         <th>시작 시간</th>
@@ -31,11 +31,14 @@
             System.err.println("SQLException: " + ex.getMessage());
         }
 
-        mySQL = "SELECT si.showingid, m.moviename, TO_CHAR(si.starttime,'YYYY/MM/DD HH24:MI:SS') starttime," +
-                "TO_CHAR(si.endtime,'YYYY/MM/DD HH24:MI:SS') endtime, sm.theatertype " +
+        mySQL = "SELECT si.showingid, m.moviename, " +
+                "TO_CHAR(si.starttime,'YYYY/MM/DD HH24:MI:SS') starttime, " +
+                "TO_CHAR(si.endtime,'YYYY/MM/DD HH24:MI:SS') endtime, " +
+                "sm.theatertype, sm.roomnumber " +
                 "FROM SHOWING_INFO si " +
                 "INNER JOIN MOVIES m ON (si.MovieID = m.MovieID) " +
-                "INNER JOIN SCREEN_ROOM sm ON (si.RoomNumber = sm.RoomNumber)";
+                "INNER JOIN SCREEN_ROOM sm ON (si.RoomNumber = sm.RoomNumber) " +
+                "ORDER BY starttime";
 
 //        mySQL = "select * from course where c_id not in " +
 //                "(select c_id from enroll where s_id = ? or " +
@@ -59,13 +62,14 @@
                 String startTime = myResultSet.getString("starttime");
                 String endTime = myResultSet.getString("endtime");
                 String theaterType = myResultSet.getString("theatertype");
+                int roomNumber = myResultSet.getInt("roomnumber");
 
     %>
     <tr>
         <td align="center"><%=movieName%></td>
         <td align="center"><%=startTime%></td>
         <td align="center"><%=endTime%></td>
-        <td align="center"><%=theaterType%></td>
+        <td align="center"><%=theaterType%> <%=roomNumber%>관</td>
         <td align="center">
             <a href="reserve.jsp?showingID=<%=showingID%>">
                 예매

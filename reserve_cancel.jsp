@@ -55,16 +55,25 @@
     cstmt.setInt(4, showingID);
     cstmt.setInt(5, finalPrice);
 
-    cstmt.execute();
+    //try {
+        cstmt.execute();
 %>
 <script>
     alert("예매가 완료되었습니다.");
     location.href="reserve_list.jsp";
 </script>
 <%
-    myConn.commit();
-    cstmt.close();
-    myConn.close();
+//    } catch(SQLException ex) {
+//        System.err.println("SQLException: " + ex.getMessage());
+//    } finally {
+//        if(cstmt != null) {
+//            try {
+                myConn.commit();
+                cstmt.close();
+                myConn.close();
+//            } catch(SQLException ex) { }
+//        }
+//    }
 %>
 </body>
 </html>
