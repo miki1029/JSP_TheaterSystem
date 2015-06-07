@@ -1,4 +1,4 @@
-<%@ page import="java.sql.*" %>
+<%@ page import="java.sql.*, java.util.*, reserveManager.*" %>
 <%@ page contentType="text/html; charset=utf-8" pageEncoding="utf-8" %>
 <html>
 <head>
@@ -28,35 +28,9 @@
         <th>취소</th>
     </tr>
 
+    <jsp:useBean id="reserveMgr" class="reserveManager.ReserveManager" />
     <%
-        Connection myConn = null;
-        ResultSet myResultSet = null;
-        String mySQL = "";
-        String dburl = "jdbc:oracle:thin:@210.94.199.20:1521:DBLAB";
-        String user = "ST2009111979";
-        String passwd = "ST2009111979";
-        String dbdriver = "oracle.jdbc.driver.OracleDriver";
-
-        try {
-            Class.forName(dbdriver);
-            myConn = DriverManager.getConnection(dburl, user, passwd);
-        } catch(SQLException ex) {
-            System.err.println("SQLException: " + ex.getMessage());
-        }
-
-        mySQL = "SELECT ticketid, moviename, roomnumber, theatertype, seatrow, seatcolumn, " +
-                "TO_CHAR(si.starttime,'YYYY/MM/DD HH24:MI:SS') starttime, " +
-                "TO_CHAR(si.endtime,'YYYY/MM/DD HH24:MI:SS') endtime, " +
-                "si.showingid, t.customerid " +
-                "FROM TICKET t " +
-                "INNER JOIN SHOWING_INFO si ON (t.ShowingID = si.ShowingID) " +
-                "INNER JOIN SCREEN_ROOM sm ON (si.RoomNumber = sm.RoomNumber) " +
-                "INNER JOIN MOVIES m ON (si.MovieID = m.MovieID) " +
-                "WHERE customerid = " + session_cid + " " +
-                "ORDER BY starttime";
-
-        Statement stmt = myConn.createStatement();
-        myResultSet = stmt.executeQuery(mySQL);
+        ResultSet myResultSet = reserveMgr.getReserveInfo(Integer.parseInt(session_cid));
 
         if(myResultSet != null) {
             while(myResultSet.next()) {
@@ -71,24 +45,8 @@
                 int showingID = myResultSet.getInt("showingid");
 
                 // get price
-                CallableStatement cstmt3 = myConn.prepareCall("{call getSecondPrice(?, ?, ?, ?, ?, ?, ?)}");
-                cstmt3.setInt(1, showingID);
-                cstmt3.setInt(2, Integer.parseInt(session_cid));
-                cstmt3.registerOutParameter(3, java.sql.Types.INTEGER);
-                cstmt3.registerOutParameter(4, java.sql.Types.INTEGER);
-                cstmt3.registerOutParameter(5, java.sql.Types.INTEGER);
-                cstmt3.registerOutParameter(6, java.sql.Types.INTEGER);
-                cstmt3.registerOutParameter(7, java.sql.Types.INTEGER);
-
-                cstmt3.execute();
-
-                int finalPrice = cstmt3.getInt(3);
-                int roomPrice = cstmt3.getInt(4);
-                int memberDiscount = cstmt3.getInt(5);
-                int timeDiscount = cstmt3.getInt(6);
-                int holidayExtra = cstmt3.getInt(7);
-
-                cstmt3.close();
+                Vector pVect = reserveMgr.getPriceInfo(showingID, Integer.parseInt(session_cid));
+                int finalPrice = (Integer) pVect.elementAt(0);
 %>
     <tr>
         <td align="center"><%=ticketID%></td>
@@ -107,8 +65,6 @@
 <%
             }
         }
-        stmt.close();
-        myConn.close();
     }
 %>
 </table>

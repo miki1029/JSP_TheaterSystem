@@ -1,4 +1,4 @@
-<%@ page import="java.sql.*" %>
+<%@ page import="java.sql.*, java.util.*, reserveManager.*" %>
 <%@ page contentType="text/html; charset=utf-8" pageEncoding="utf-8" %>
 <html>
 <head>
@@ -17,36 +17,16 @@ if (session_cid==null) {
 else {
 %>
 <table width="75%" align="center" border>
+    <jsp:useBean id="reserveMgr" class="reserveManager.ReserveManager" />
 <%
     int showingID = Integer.parseInt(request.getParameter("showingID"));
     int rowCnt = 0;
     int columnCnt = 0;
 
-    Connection myConn = null;
-    ResultSet myResultSet = null;
-    String dburl = "jdbc:oracle:thin:@210.94.199.20:1521:DBLAB";
-    String user = "ST2009111979";
-    String passwd = "ST2009111979";
-    String dbdriver = "oracle.jdbc.driver.OracleDriver";
-
-    try {
-        Class.forName(dbdriver);
-        myConn = DriverManager.getConnection(dburl, user, passwd);
-    } catch(SQLException ex) {
-        System.err.println("SQLException: " + ex.getMessage());
-    }
-
     // get room seats size
-    CallableStatement cstmt = myConn.prepareCall("{call getRoomSize(?, ?, ?)}");
-    cstmt.setInt(1, showingID);
-    cstmt.registerOutParameter(2, java.sql.Types.INTEGER);
-    cstmt.registerOutParameter(3, java.sql.Types.INTEGER);
-
-    cstmt.execute();
-
-    rowCnt = cstmt.getInt(2);
-    columnCnt = cstmt.getInt(3);
-    cstmt.close();
+    Vector rcVect = reserveMgr.getRoomSeatsRowColumn(showingID);
+    rowCnt = (Integer) rcVect.elementAt(0);
+    columnCnt = (Integer) rcVect.elementAt(1);
 
     // draw seat
     for(int row=1; row<=rowCnt; row++) {
@@ -54,17 +34,9 @@ else {
     <tr>
     <%
         for(int column=1; column<=columnCnt; column++) {
-            CallableStatement cstmt2 = myConn.prepareCall("{call isReserved(?, ?, ?, ?)}");
-            cstmt2.setInt(1, showingID);
-            cstmt2.setInt(2, row);
-            cstmt2.setInt(3, column);
-            cstmt2.registerOutParameter(4, java.sql.Types.INTEGER);
-
-            cstmt2.execute();
-
-            int result = cstmt2.getInt(4);
+            boolean result = reserveMgr.getReservedState(showingID, row, column);
             String seatLink = null;
-            if(result == 0) {
+            if(result) {
                 seatLink = "<a href='reserve_verify.jsp?showingID=" + showingID +
                         "&row=" + row + "&column=" + column + "'>" +
                         "[" + row + "," + column + "]</a>";
@@ -72,7 +44,6 @@ else {
             else {
                 seatLink = "예약됨";
             }
-            cstmt2.close();
     %>
         <td align="center"><%=seatLink%></td>
     <%
@@ -86,24 +57,13 @@ else {
 
 <%
     // get price
-    CallableStatement cstmt3 = myConn.prepareCall("{call getSecondPrice(?, ?, ?, ?, ?, ?, ?)}");
-    cstmt3.setInt(1, showingID);
-    cstmt3.setInt(2, Integer.parseInt(session_cid));
-    cstmt3.registerOutParameter(3, java.sql.Types.INTEGER);
-    cstmt3.registerOutParameter(4, java.sql.Types.INTEGER);
-    cstmt3.registerOutParameter(5, java.sql.Types.INTEGER);
-    cstmt3.registerOutParameter(6, java.sql.Types.INTEGER);
-    cstmt3.registerOutParameter(7, java.sql.Types.INTEGER);
+    Vector pVect = reserveMgr.getPriceInfo(showingID, Integer.parseInt(session_cid));
 
-    cstmt3.execute();
-
-    int finalPrice = cstmt3.getInt(3);
-    int roomPrice = cstmt3.getInt(4);
-    int memberDiscount = cstmt3.getInt(5);
-    int timeDiscount = cstmt3.getInt(6);
-    int holidayExtra = cstmt3.getInt(7);
-
-    cstmt3.close();
+    int finalPrice = (Integer) pVect.elementAt(0);
+    int roomPrice = (Integer) pVect.elementAt(1);
+    int memberDiscount = (Integer) pVect.elementAt(2);
+    int timeDiscount = (Integer) pVect.elementAt(3);
+    int holidayExtra = (Integer) pVect.elementAt(4);
 %>
 <br />
 <table align="center" border cellpadding="10px">
@@ -130,14 +90,7 @@ else {
 </table>
 
 <%
-    if (session_cid==null) {
-%>
-<br />
-<div align="center">멤버쉽 혜택을 받으려면 먼저 로그인 해 주세요.</div>
-<%
-        }
-        myConn.close();
-    }
+}
 %>
 
 </body>
