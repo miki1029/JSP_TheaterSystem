@@ -5,8 +5,7 @@
 <body>
 <%@ include file="top.jsp" %>
 <%
-	String m_pwd = new String(request.getParameter("m_pwd").getBytes("8859_1"),"utf-8"); 
-	String m_name = new String(request.getParameter("m_name").getBytes("8859_1"),"utf-8"); 
+	String m_pwd = new String(request.getParameter("m_pwd").getBytes("8859_1"),"utf-8");
 	String m_sex = new String(request.getParameter("m_sex").getBytes("8859_1"),"utf-8");
 	String m_email = new String(request.getParameter("m_email").getBytes("8859_1"),"utf-8"); 
 
@@ -24,16 +23,15 @@
 
 
     mySQL = "UPDATE MEMBERS SET " +
-            "Password=?,Name=?,Sex=?,Email=? " +
+            "Password=?,Sex=?,Email=? " +
             "WHERE CustomerID=?";
 
     try {
         pstmt = myConn.prepareStatement(mySQL);
         pstmt.setString(1, m_pwd);
-        pstmt.setString(2, m_name);
-        pstmt.setString(3, m_sex);
-        pstmt.setString(4, m_email);
-        pstmt.setInt(5, Integer.parseInt(session_cid));
+        pstmt.setString(2, m_sex);
+        pstmt.setString(3, m_email);
+        pstmt.setInt(4, Integer.parseInt(session_cid));
 
         if(pstmt.executeUpdate() == 0) {
             throw new SQLException();
