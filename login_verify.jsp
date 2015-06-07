@@ -4,12 +4,16 @@
     String userType = request.getParameter("userType");
     String userID = request.getParameter("userID");
     String userPassword = request.getParameter("userPassword");
-    String redirectURL = "login.jsp";
+    String loginURL = loginURL = "login.jsp";
+    String redirectURL = request.getParameter("redirectURL");
+    if(redirectURL == null) {
+        redirectURL = "main.jsp";
+    }
 
     Connection myConn = null;
     String mySQL = null;
 
-    String dburl  = "jdbc:oracle:thin:@210.94.199.20:1521:dblab";
+    String dburl = "jdbc:oracle:thin:@210.94.199.20:1521:dblab";
     String user="ST2009111979"; 		// 본인 아이디(ex.ST0000000000)
     String passwd="ST2009111979";   // 본인 패스워드(ex.ST0000000000)
     String dbdriver = "oracle.jdbc.OracleDriver";
@@ -18,18 +22,7 @@
     myConn =  DriverManager.getConnection (dburl, user, passwd);
 
     if(userType.equals("admin")) {
-        redirectURL = "admin_login.jsp";
-        /*
-        mySQL = "SELECT * " +
-                "FROM EMPLOYEES e INNER JOIN ADMIN a " +
-                "ON (e.EmployeeID = a.EmployeeID) " +
-                "WHERE a.ID = ? AND a.Password = ?";
-
-        pstmt = myConn.prepareStatement(mySQL);
-        pstmt.setString(1, userID);
-        pstmt.setString(2, userPassword);
-
-        ResultSet myResultSet = pstmt.executeQuery();*/
+        loginURL = "admin_login.jsp";
 
         mySQL = "SELECT * " +
                 "FROM EMPLOYEES e INNER JOIN ADMIN a " +
@@ -50,17 +43,7 @@
         stmt.close();
     }
     else if(userType.equals("member")) {
-        redirectURL = "login.jsp";
-        /*
-        mySQL = "SELECT * " +
-                "FROM MEMBERS " +
-                "WHERE CustomerID = ? AND Password = ?";
-
-        pstmt = myConn.prepareStatement(mySQL);
-        pstmt.setString(1, userID);
-        pstmt.setString(2, userPassword);
-
-        ResultSet myResultSet = pstmt.executeQuery();*/
+        loginURL = "login.jsp";
 
         mySQL = "SELECT * " +
                 "FROM CUSTOMERS c INNER JOIN MEMBERS m " +
@@ -74,17 +57,15 @@
         if (myResultSet.next()) {
             String cID = myResultSet.getString("CustomerID");
             String cName = myResultSet.getString("Name");
-            //String cGrade = myResultSet.getString("GradeID");
 
             session.setAttribute("cID", cID);
             session.setAttribute("cName", cName);
-//            session.setAttribute("cGrade", cGrade);
             response.sendRedirect("main.jsp");
         }
         stmt.close();
     }
     else if(userType.equals("customer")) {
-        redirectURL = "nonmember_login.jsp";
+        loginURL = "nonmember_login.jsp";
         mySQL = "SELECT * " +
                 "FROM CUSTOMERS " +
                 "WHERE PhoneNumber = '" + userID + "' AND GradeID = 0";
@@ -95,12 +76,10 @@
         // 로그인 한 적이 있는 고객
         if (myResultSet.next()) {
             String cID = myResultSet.getString("CustomerID");
-//            String cGrade = myResultSet.getString("GradeID");
 
             session.setAttribute("cID", cID);
             session.setAttribute("cName", userID); // 비회원은 전화번호로 대체
-//            session.setAttribute("cGrade", cGrade);
-            response.sendRedirect("showing_list.jsp");
+            response.sendRedirect(redirectURL);
         }
         // 첫 방문 고객
         else {
@@ -114,17 +93,13 @@
 
             // 다시 조회
             Statement stmt3 = myConn.createStatement();
-
             ResultSet myResultSet3 = stmt3.executeQuery(mySQL);
-            // 로그인 한 적이 있는 고객
             if (myResultSet3.next()) {
                 String cID = myResultSet3.getString("CustomerID");
-//            String cGrade = myResultSet.getString("GradeID");
 
                 session.setAttribute("cID", cID);
                 session.setAttribute("cName", userID); // 비회원은 전화번호로 대체
-//            session.setAttribute("cGrade", cGrade);
-                response.sendRedirect("showing_list.jsp");
+                response.sendRedirect(redirectURL);
             }
             stmt3.close();
         }
@@ -133,7 +108,7 @@
 %>
 <script>
 	alert("사용자 아이디 혹은 암호가 틀렸습니다");
-    location.href = "<%=redirectURL%>";
+    location.href = "<%=loginURL%>";
 </script>
 <%
     myConn.close();

@@ -2,17 +2,17 @@
 <%@ page contentType="text/html; charset=utf-8" pageEncoding="utf-8" %>
 <html>
 <head>
-    <title>WooDrims ¿µÈ­°ü</title>
+    <title>WooDrims ì˜í™”ê´€</title>
 </head>
 <body>
 <%@ include file="admin_top.jsp" %>
 <table width="85%" align="center" border>
     <tr>
-        <th>¿µÈ­ Á¦¸ñ</th>
-        <th>½ÃÀÛ ½Ã°£</th>
-        <th>Á¾·á ½Ã°£</th>
-        <th>»ó¿µ°ü</th>
-        <th>¿¹¸Å</th>
+        <th>ì˜í™” ì œëª©</th>
+        <th>ì‹œìž‘ ì‹œê°„</th>
+        <th>ì¢…ë£Œ ì‹œê°„</th>
+        <th>ìƒì˜ê´€</th>
+        <th>ì˜ˆë§¤</th>
     </tr>
 
     <%
@@ -69,10 +69,10 @@
         <td align="center"><%=movieName%></td>
         <td align="center"><%=startTime%></td>
         <td align="center"><%=endTime%></td>
-        <td align="center"><%=theaterType%> <%=roomNumber%>°ü</td>
+        <td align="center"><%=theaterType%> <%=roomNumber%>ê´€</td>
         <td align="center">
             <a href="reserve.jsp?showingID=<%=showingID%>">
-                ¿¹¸Å
+                ì˜ˆë§¤
             </a>
         </td>
     </tr>
@@ -83,16 +83,6 @@
         myConn.close();
     %>
 </table>
-
-<%
-
-    if (session_cid==null) {
-%>
-<br />
-<div align="center">¸â¹ö½± ÇýÅÃÀ» ¹ÞÀ¸·Á¸é ¸ÕÀú ·Î±×ÀÎ ÇØ ÁÖ¼¼¿ä.</div>
-<%
-    }
-%>
 
 </body>
 </html>

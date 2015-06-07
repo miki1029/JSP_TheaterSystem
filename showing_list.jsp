@@ -50,6 +50,7 @@
                 "FROM SHOWING_INFO si " +
                 "INNER JOIN MOVIES m ON (si.MovieID = m.MovieID) " +
                 "INNER JOIN SCREEN_ROOM sm ON (si.RoomNumber = sm.RoomNumber) " +
+                //"WHERE " +
                 "ORDER BY starttime";
 
         Statement stmt = myConn.createStatement();
@@ -85,7 +86,6 @@
 </table>
 
 <%
-
     if (session_cid==null) {
 %>
 <br />

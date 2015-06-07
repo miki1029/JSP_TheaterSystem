@@ -1,4 +1,11 @@
 <%@ page contentType="text/html; charset=utf-8" pageEncoding="utf-8" %>
+<%@ page import="java.sql.*" %>
+<%
+    String redirectURL = request.getParameter("redirectURL");
+    if(redirectURL == null) {
+        redirectURL = "main.jsp";
+    }
+%>
 <html>
 <head>
     <title>로그인</title>
@@ -13,7 +20,7 @@
         </td>
     </tr>
 </table>
-<form method="post" action="login_verify.jsp">
+<form method="post" action="login_verify.jsp?redirectURL=<%=redirectURL%>">
     <input type="hidden" name="userType" value="customer" />
     <table width="75%" align="center" border>
         <tr>

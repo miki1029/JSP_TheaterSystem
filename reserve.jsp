@@ -10,7 +10,7 @@
 if (session_cid==null) {
 %>
 <script>
-    location.href = "nonmember_login.jsp";
+    location.href = "nonmember_login.jsp?redirectURL=showing_list.jsp";
 </script>
 <%
 }

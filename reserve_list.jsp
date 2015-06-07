@@ -6,6 +6,16 @@
 </head>
 <body>
 <%@ include file="top.jsp" %>
+<%
+    if (session_cid==null) {
+%>
+<script>
+    location.href = "nonmember_login.jsp?redirectURL=reserve_list.jsp";
+</script>
+<%
+    }
+    else {
+%>
 <table width="85%" align="center" border>
     <tr>
         <th>티켓 번호</th>
@@ -79,8 +89,7 @@
                 int holidayExtra = cstmt3.getInt(7);
 
                 cstmt3.close();
-
-    %>
+%>
     <tr>
         <td align="center"><%=ticketID%></td>
         <td align="center"><%=movieName%></td>
@@ -95,13 +104,13 @@
             </a>
         </td>
     </tr>
-    <%
+<%
             }
         }
-//        pstmt.close();
         stmt.close();
         myConn.close();
-    %>
+    }
+%>
 </table>
 </body>
 </html>
