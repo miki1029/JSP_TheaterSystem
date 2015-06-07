@@ -92,6 +92,7 @@
         Statement stmt = myConn.createStatement();
 
         ResultSet myResultSet = stmt.executeQuery(mySQL);
+        // 로그인 한 적이 있는 고객
         if (myResultSet.next()) {
             String cID = myResultSet.getString("CustomerID");
 //            String cGrade = myResultSet.getString("GradeID");
@@ -100,6 +101,32 @@
             session.setAttribute("cName", userID); // 비회원은 전화번호로 대체
 //            session.setAttribute("cGrade", cGrade);
             response.sendRedirect("showing_list.jsp");
+        }
+        // 첫 방문 고객
+        else {
+            String mySQL2 = "INSERT INTO CUSTOMERS(CustomerID, PhoneNumber, GradeID) " +
+                    "VALUES (SEQ_Customers.NEXTVAL, '" + userID + "', 0)";
+            Statement stmt2 = myConn.createStatement();
+            if(stmt2.executeUpdate(mySQL2) == 0) {
+                throw new Exception("update fail");
+            }
+            stmt2.close();
+
+            // 다시 조회
+            Statement stmt3 = myConn.createStatement();
+
+            ResultSet myResultSet3 = stmt3.executeQuery(mySQL);
+            // 로그인 한 적이 있는 고객
+            if (myResultSet3.next()) {
+                String cID = myResultSet3.getString("CustomerID");
+//            String cGrade = myResultSet.getString("GradeID");
+
+                session.setAttribute("cID", cID);
+                session.setAttribute("cName", userID); // 비회원은 전화번호로 대체
+//            session.setAttribute("cGrade", cGrade);
+                response.sendRedirect("showing_list.jsp");
+            }
+            stmt3.close();
         }
         stmt.close();
     }
