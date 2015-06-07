@@ -1,207 +1,127 @@
-<%@ page contentType="text/html; charset=utf-8" pageEncoding="utf-8" %>
+ï»¿<%@ page contentType="text/html; charset=utf-8" pageEncoding="utf-8" %>
 <%@ page import="java.sql.*"  %>
 <html>
 <head>
-    <title>WooDrims ¿µÈ­°ü</title>
+    <title>WooDrims ì˜í™”ê´€</title>
 </head>
 <body>
 <%@ include file="admin_top.jsp" %>
-<% 
-	if (session_eid==null) response.sendRedirect("login.jsp");
+<%
+    Connection myConn = null;
+    Statement stmt = null;
+    ResultSet myResultSet = null;
+    String mySQL = "";
 
-	Connection myConn = null;     
-	Statement stmt = null;	
-	ResultSet myResultSet = null; 
-	String mySQL = "";
+    String dburl  = "jdbc:oracle:thin:@210.94.199.20:1521:dblab";
+    String user="ST2009111979"; 		  // ë³¸ì¸ ì•„ì´ë””(ex.ST0000000000)
+    String passwd="ST2009111979";   // ë³¸ì¸ íŒ¨ìŠ¤ì›Œë“œ(ex.ST0000000000)
+    String dbdriver = "oracle.jdbc.driver.OracleDriver";
 
-	String dburl  = "jdbc:oracle:thin:@210.94.199.20:1521:dblab";
-	String user="ST2009111979"; 		  // º»ÀÎ ¾ÆÀÌµð(ex.ST0000000000)
-	String passwd="ST2009111979";   // º»ÀÎ ÆÐ½º¿öµå(ex.ST0000000000)
-	String dbdriver = "oracle.jdbc.driver.OracleDriver";  
-	
-	try {
-  	    Class.forName(dbdriver);
-	    myConn =  DriverManager.getConnection (dburl, user, passwd);
-	    stmt = myConn.createStatement();	
+    try {
+        Class.forName(dbdriver);
+        myConn =  DriverManager.getConnection (dburl, user, passwd);
+        stmt = myConn.createStatement();
     } catch(SQLException ex) {
-	     System.err.println("SQLException: " + ex.getMessage());
-	}
-	mySQL = "SELECT * " +
-            "FROM EMPLOYEES e INNER JOIN SCREEN_ROOM_MANAGER s " +
-            "ON (e.EmployeeID = s.EmployeeID) " +
-            "WHERE e.Role = 'screen_room_manager'";
-			
-	myResultSet = stmt.executeQuery(mySQL);
-	%>
-		 <h2 align="center">*****½ºÅ©¸° °ü¸®¿ä¿ø*****</h2>
-	<%
-	
-	if (myResultSet != null) {
-		while(myResultSet.next()) {
-		int s_ID = myResultSet.getInt("EmployeeID");
-		String s_name = myResultSet.getString("Name");
-		String s_sex = myResultSet.getString("Sex");
-		Date s_hdate = myResultSet.getDate("HireDate");
-		String s_role = myResultSet.getString("Role");
-		String s_position = myResultSet.getString("Position");
-		String s_phone = myResultSet.getString("PhoneNumber");
-		int s_roomnum = myResultSet.getInt("RoomNumber");
+        System.err.println("SQLException: " + ex.getMessage());
+    }
+    mySQL = "SELECT * " +
+            "FROM CUSTOMERS c " + 
+            "INNER JOIN MEMBERS m " + 
+            "ON (c.CustomerID = m.CustomerID) " +
+            "INNER JOIN MEMBER_GRADE g " + 
+            "ON (c.GradeID = g.GradeID) " +
+            "WHERE c.GradeID <> 0";
+
+    myResultSet = stmt.executeQuery(mySQL);
+%>
+<h2 align="center">*****íšŒì› ëª…ë‹¨*****</h2>
+<%
+
+    if (myResultSet != null) {
+        while(myResultSet.next()) {
+            int m_CID = myResultSet.getInt("CustomerID");
+            String m_ID = myResultSet.getString("ID");
+            String m_name = myResultSet.getString("Name");
+            //String m_pwd = myResultSet.getString("Password");
+            Date m_rgdate = myResultSet.getDate("RegisterDate");
+            String m_sex = myResultSet.getString("Sex");
+            Date m_birth = myResultSet.getDate("Birthdate");
+            String m_email = myResultSet.getString("Email");
+            int m_point = myResultSet.getInt("Point");
+            String m_gname = myResultSet.getString("GradeName");
+            
 %>
 
 
-  <table width="75%" align="center" border>
-     <tr><th>Á÷¿ø ID</th>
-         <td><%= s_ID %></td>
-     </tr>
-	 <tr><th>ÀÌ¸§</th>
-         <td> <%= s_name %></td>
-     </tr>
-	 <tr><th>¼ºº°</th>
-         <td> <%= s_sex %></td>
-     </tr>
-	 <tr><th>°í¿ëÀÏ</th>
-         <td> <%= s_hdate %></td>
-     </tr>
-	 <tr><th>ÀüÈ­¹øÈ£</th>
-         <td><%= s_phone %></td>
-     </tr>		 
-	 <tr><th>Á÷¹«</th>
-         <td><%= s_role %></td>
-     </tr>
-	 <tr><th>Á÷±Þ</th>
-         <td><%= s_position %></td>
-     </tr>
-		   
-	 <br><br>
-	 
-	 
-	 <%
-		}
-	}
-	%>
-	 
-<%
-	mySQL = "SELECT * " +
-            "FROM EMPLOYEES e INNER JOIN TICKET_SELLER t " +
-            "ON (e.EmployeeID = t.EmployeeID) " +
-            "WHERE e.Role = 'ticket_seller'";
-			
-	myResultSet = stmt.executeQuery(mySQL);
-	%>
-		 <h2 align="center">*****Æ¼ÄÏ ÆÇ¸ÅÁ÷¿ø*****</h2>
-	<%	
-	if (myResultSet != null) {
-		while(myResultSet.next()) {
-		int t_ID = myResultSet.getInt("EmployeeID");
-		String t_name = myResultSet.getString("Name");
-		String t_sex = myResultSet.getString("Sex");
-		Date t_hdate = myResultSet.getDate("HireDate");
-		String t_role = myResultSet.getString("Role");
-		String t_position = myResultSet.getString("Position");
-		String t_phone = myResultSet.getString("PhoneNumber");
-		int t_tbox = myResultSet.getInt("TicketboxID");
-
-%>	 
-	 
-  <table width="75%" align="center" border>
-     <tr><th>Á÷¿ø ID</th>
-         <td><%= t_ID %></td>
-     </tr>
-	 <tr><th>ÀÌ¸§</th>
-         <td> <%= t_name %></td>
-     </tr>
-	 <tr><th>¼ºº°</th>
-         <td> <%= t_sex %></td>
-     </tr>
-	 <tr><th>°í¿ëÀÏ</th>
-         <td> <%= t_hdate %></td>
-     </tr>
-	 <tr><th>ÀüÈ­¹øÈ£</th>
-         <td><%= t_phone %></td>
-     </tr>		 
-	 <tr><th>Á÷¹«</th>
-         <td><%= t_role %></td>
-     </tr>
-	 <tr><th>Á÷±Þ</th>
-         <td><%= t_position %></td>
-     </tr>
-		   
-	 <br><br> 
-	 
-	 
-	 
-	 
-	 <%
-		}
-	}
-	 
-	 %>
-	 	 
-	 	 
-<%
-	mySQL = "SELECT * " +
-            "FROM EMPLOYEES e INNER JOIN CLEANER c " +
-            "ON (e.EmployeeID = c.EmployeeID) " +
-            "WHERE e.Role = 'cleaner'";
-			
-	myResultSet = stmt.executeQuery(mySQL);
-	%>
-		 <h2 align="center">*****±ØÀå Ã»¼ÒÁ÷¿ø*****</h2>
-	<%	
-	if (myResultSet != null) {
-		while(myResultSet.next()) {
-		int c_ID = myResultSet.getInt("EmployeeID");
-		String c_name = myResultSet.getString("Name");
-		String c_sex = myResultSet.getString("Sex");
-		Date c_hdate = myResultSet.getDate("HireDate");
-		String c_role = myResultSet.getString("Role");
-		String c_position = myResultSet.getString("Position");
-		String c_phone = myResultSet.getString("PhoneNumber");
-		String c_dist = myResultSet.getString("District");
-
-%>	 
-	 
-  <table width="75%" align="center" border>
-     <tr><th>Á÷¿ø ID</th>
-         <td><%= c_ID %></td>
-     </tr>
-	 <tr><th>ÀÌ¸§</th>
-         <td> <%= c_name %></td>
-     </tr>
-	 <tr><th>¼ºº°</th>
-         <td> <%= c_sex %></td>
-     </tr>
-	 <tr><th>°í¿ëÀÏ</th>
-         <td> <%= c_hdate %></td>
-     </tr>
-	 <tr><th>ÀüÈ­¹øÈ£</th>
-         <td><%= c_phone %></td>
-     </tr>		 
-	 <tr><th>Á÷¹«</th>
-         <td><%= c_role %></td>
-     </tr>
-	 <tr><th>Á÷±Þ</th>
-         <td><%= c_position %></td>
-     </tr>
-		   
-	 <br><br> 
-	 
-	 
-	 <%
-		}
-	}
-	 
-	 %>
-
-
-	 
-<%
-	stmt.close();  
-	myConn.close();
-%>
+<table width="75%" align="center" border>
+    <tr><th>ê³ ê° ì‹ë³„ID</th>
+        <td><%= m_CID %></td>
+    </tr>
+    <tr><th>ê³ ê° íšŒì›ID</th>
+        <td> <%= m_ID %></td>
+    </tr>
+    <tr><th>ì ë¦½ëœ í¬ì¸íŠ¸</th>
+        <td> <%= m_point %></td>
+    </tr> 
+    <tr><th>íšŒì› ë“±ê¸‰</th>
+        <td> <%= m_gname %></td>
+    </tr>    
+    <tr><th>ì´ë¦„</th>
+        <td> <%= m_name %></td>
+    </tr>
+    <tr><th>ì„±ë³„</th>
+        <td> <%= m_sex %></td>
+    </tr>
+    <tr><th>ìƒì¼</th>
+        <td><%= m_birth %></td>
+    </tr>
+    <tr><th>ì´ë©”ì¼</th>
+        <td><%= m_email %></td>
+    </tr>
+    <tr><th>ë“±ë¡ì¼</th>
+        <td><%= m_rgdate %></td>
+    </tr>
 </table>
-<br><br>
-	
-	<input type="submit" value="¼öÁ¤">
-	
+<br />
+<%
+		}
+	}
+
+	mySQL = "SELECT * " +
+            "FROM CUSTOMERS c INNER JOIN MEMBER_GRADE m " +
+            "ON (c.GradeID = m.GradeID) " +
+            "WHERE c.GradeID = 0";
+			
+	myResultSet = stmt.executeQuery(mySQL);
+%>
+    <h2 align="center">*****ë¹„íšŒì› ê³ ê° ëª…ë‹¨*****</h2>
+<%
+	if (myResultSet != null) {
+		while(myResultSet.next()) {
+		int c_ID = myResultSet.getInt("CustomerID");
+		String c_phone = myResultSet.getString("PhoneNumber");
+		int c_GID = myResultSet.getInt("GradeID");
+		String c_gname = myResultSet.getString("GradeName");
+
+%>
+
+<table width="75%" align="center" border>
+    <tr><th>ê³ ê° ID</th>
+        <td><%= c_ID %></td>
+    </tr>
+    <tr><th>ì „í™”ë²ˆí˜¸</th>
+        <td><%= c_phone %></td>
+    </tr>
+</table>
+<br /> 
+<%
+        }
+    }
+
+    stmt.close();
+    myConn.close();
+%>
+
+<%--<input type="submit" value="ìˆ˜ì •">--%>
+
 </body></html>
