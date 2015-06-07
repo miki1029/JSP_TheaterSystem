@@ -1,7 +1,8 @@
-<%@ page contentType="text/html; charset=utf-8" pageEncoding="utf-8" %>
+ï»¿<%@ page contentType="text/html; charset=utf-8" pageEncoding="utf-8" %>
+<%@ page import="java.sql.*"  %>
 <html>
 <head>
-    <title>WooDrims ¿µÈ­°ü</title>
+    <title>WooDrims ì˜í™”ê´€</title>
 </head>
 <body>
 <%@ include file="admin_top.jsp" %>
@@ -14,8 +15,8 @@
 	String mySQL = "";
 
 	String dburl  = "jdbc:oracle:thin:@210.94.199.20:1521:dblab";
-	String user="ST2009111979"; 		  // º»ÀÎ ¾ÆÀÌµð(ex.ST0000000000)
-	String passwd="ST2009111979";   // º»ÀÎ ÆÐ½º¿öµå(ex.ST0000000000)
+	String user="ST2009111979"; 		  // ë³¸ì¸ ì•„ì´ë””(ex.ST0000000000)
+	String passwd="ST2009111979";   // ë³¸ì¸ íŒ¨ìŠ¤ì›Œë“œ(ex.ST0000000000)
 	String dbdriver = "oracle.jdbc.driver.OracleDriver";  
 	
 	try {
@@ -31,6 +32,9 @@
             "WHERE e.Role = 'screen_room_manager'";
 			
 	myResultSet = stmt.executeQuery(mySQL);
+	%>
+		 <h2 align="center">*****ìŠ¤í¬ë¦° ê´€ë¦¬ìš”ì›*****</h2>
+	<%
 	
 	if (myResultSet != null) {
 		while(myResultSet.next()) {
@@ -44,28 +48,28 @@
 		int s_roomnum = myResultSet.getInt("RoomNumber");
 %>
 
+
   <table width="75%" align="center" border>
-	 <tr><th>*****½ºÅ©¸° °ü¸®¿ä¿ø*****</th><tr>
-     <tr><th>Á÷¿ø ID</th>
+     <tr><th>ì§ì› ID</th>
          <td><%= s_ID %></td>
      </tr>
-	 <tr><th>ÀÌ¸§</th>
+	 <tr><th>ì´ë¦„</th>
          <td> <%= s_name %></td>
      </tr>
-	 <tr><th>¼ºº°</th>
-         <td> <%= s_name %></td>
+	 <tr><th>ì„±ë³„</th>
+         <td> <%= s_sex %></td>
      </tr>
-	 <tr><th>°í¿ëÀÏ</th>
+	 <tr><th>ê³ ìš©ì¼</th>
          <td> <%= s_hdate %></td>
      </tr>
-	 <tr><th>ÀüÈ­¹øÈ£</th>
+	 <tr><th>ì „í™”ë²ˆí˜¸</th>
          <td><%= s_phone %></td>
      </tr>		 
-	 <tr><th>Á÷¹«</th>
+	 <tr><th>ì§ë¬´</th>
          <td><%= s_role %></td>
      </tr>
-	 <tr><th>Á÷±Þ</th>
-         <td><%= s_sex %></td>
+	 <tr><th>ì§ê¸‰</th>
+         <td><%= s_position %></td>
      </tr>
 		   
 	 <br><br>
@@ -83,7 +87,9 @@
             "WHERE e.Role = 'ticket_seller'";
 			
 	myResultSet = stmt.executeQuery(mySQL);
-	
+	%>
+		 <h2 align="center">*****í‹°ì¼“ íŒë§¤ì§ì›*****</h2>
+	<%	
 	if (myResultSet != null) {
 		while(myResultSet.next()) {
 		int t_ID = myResultSet.getInt("EmployeeID");
@@ -98,27 +104,26 @@
 %>	 
 	 
   <table width="75%" align="center" border>
-	 <tr><th>*****½ºÅ©¸° °ü¸®¿ä¿ø*****</th><tr>
-     <tr><th>Á÷¿ø ID</th>
-         <td><%= s_ID %></td>
+     <tr><th>ì§ì› ID</th>
+         <td><%= t_ID %></td>
      </tr>
-	 <tr><th>ÀÌ¸§</th>
-         <td> <%= s_name %></td>
+	 <tr><th>ì´ë¦„</th>
+         <td> <%= t_name %></td>
      </tr>
-	 <tr><th>¼ºº°</th>
-         <td> <%= s_name %></td>
+	 <tr><th>ì„±ë³„</th>
+         <td> <%= t_sex %></td>
      </tr>
-	 <tr><th>°í¿ëÀÏ</th>
-         <td> <%= s_hdate %></td>
+	 <tr><th>ê³ ìš©ì¼</th>
+         <td> <%= t_hdate %></td>
      </tr>
-	 <tr><th>ÀüÈ­¹øÈ£</th>
-         <td><%= s_phone %></td>
+	 <tr><th>ì „í™”ë²ˆí˜¸</th>
+         <td><%= t_phone %></td>
      </tr>		 
-	 <tr><th>Á÷¹«</th>
-         <td><%= s_role %></td>
+	 <tr><th>ì§ë¬´</th>
+         <td><%= t_role %></td>
      </tr>
-	 <tr><th>Á÷±Þ</th>
-         <td><%= s_sex %></td>
+	 <tr><th>ì§ê¸‰</th>
+         <td><%= t_position %></td>
      </tr>
 		   
 	 <br><br> 
@@ -131,17 +136,72 @@
 	}
 	 
 	 %>
+	 	 
+	 	 
+<%
+	mySQL = "SELECT * " +
+            "FROM EMPLOYEES e INNER JOIN CLEANER c " +
+            "ON (e.EmployeeID = c.EmployeeID) " +
+            "WHERE e.Role = 'cleaner'";
+			
+	myResultSet = stmt.executeQuery(mySQL);
+	%>
+		 <h2 align="center">*****ê·¹ìž¥ ì²­ì†Œì§ì›*****</h2>
+	<%	
+	if (myResultSet != null) {
+		while(myResultSet.next()) {
+		int c_ID = myResultSet.getInt("EmployeeID");
+		String c_name = myResultSet.getString("Name");
+		String c_sex = myResultSet.getString("Sex");
+		Date c_hdate = myResultSet.getDate("HireDate");
+		String c_role = myResultSet.getString("Role");
+		String c_position = myResultSet.getString("Position");
+		String c_phone = myResultSet.getString("PhoneNumber");
+		String c_dist = myResultSet.getString("District");
+
+%>	 
+	 
+  <table width="75%" align="center" border>
+     <tr><th>ì§ì› ID</th>
+         <td><%= c_ID %></td>
+     </tr>
+	 <tr><th>ì´ë¦„</th>
+         <td> <%= c_name %></td>
+     </tr>
+	 <tr><th>ì„±ë³„</th>
+         <td> <%= c_sex %></td>
+     </tr>
+	 <tr><th>ê³ ìš©ì¼</th>
+         <td> <%= c_hdate %></td>
+     </tr>
+	 <tr><th>ì „í™”ë²ˆí˜¸</th>
+         <td><%= c_phone %></td>
+     </tr>		 
+	 <tr><th>ì§ë¬´</th>
+         <td><%= c_role %></td>
+     </tr>
+	 <tr><th>ì§ê¸‰</th>
+         <td><%= c_position %></td>
+     </tr>
+		   
+	 <br><br> 
 	 
 	 
+	 <%
+		}
+	}
 	 
+	 %>
+
+
 	 
 <%
 	stmt.close();  
 	myConn.close();
 %>
-<tr>
-	<td colspan="2" align="center">
-	<input type="submit" value="¼öÁ¤">
-	</td> 
-</tr>
-</table></form></body></html>
+</table>
+<br><br>
+	
+	<input type="submit" value="ìˆ˜ì •">
+	
+</body></html>
