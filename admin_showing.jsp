@@ -12,8 +12,8 @@
         <th>시작 시간</th>
         <th>종료 시간</th>
         <th>상영관</th>
-        <th>수정</th>
-        <th>삭제</th>
+        <%--<th>수정</th>--%>
+        <%--<th>삭제</th>--%>
     </tr>
 
     <%
@@ -59,16 +59,16 @@
         <td align="center"><%=startTime%></td>
         <td align="center"><%=endTime%></td>
         <td align="center"><%=theaterType%> <%=roomNumber%>관</td>
-        <td align="center">
-            <a href="admin_showing_modify.jsp?showingID=<%=showingID%>">
-                수정
-            </a>
-        </td>
-        <td align="center">
-            <a href="admin_showing_delete.jsp?showingID=<%=showingID%>">
-                삭제
-            </a>
-        </td>
+        <%--<td align="center">--%>
+            <%--<a href="admin_showing_modify.jsp?showingID=<%=showingID%>">--%>
+                <%--수정--%>
+            <%--</a>--%>
+        <%--</td>--%>
+        <%--<td align="center">--%>
+            <%--<a href="admin_showing_delete.jsp?showingID=<%=showingID%>">--%>
+                <%--삭제--%>
+            <%--</a>--%>
+        <%--</td>--%>
     </tr>
     <%
             }
@@ -76,13 +76,13 @@
         stmt.close();
         myConn.close();
     %>
-    <tr>
-        <td colspan="6" align="center">
-            <a href="admin_showing_insert.jsp">
-                추가
-            </a>
-        </td>
-    </tr>
+    <%--<tr>--%>
+        <%--<td colspan="6" align="center">--%>
+            <%--<a href="admin_showing_insert.jsp">--%>
+                <%--추가--%>
+            <%--</a>--%>
+        <%--</td>--%>
+    <%--</tr>--%>
 </table>
 
 </body>
