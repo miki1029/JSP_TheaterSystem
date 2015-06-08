@@ -93,7 +93,7 @@ public class ReserveManager {
 
     public Vector getPriceInfo(int showingID, int customerID) {
         Connection conn = null;
-        Vector vecList = null;
+        Vector vecList = new Vector();
 
         try {
             conn = pool.getConnection();
@@ -130,9 +130,9 @@ public class ReserveManager {
         return vecList;
     }
 
-    public ResultSet getReserveInfo(int customerID) {
+    public Vector getReserveInfo(int customerID) {
         Connection conn = null;
-        ResultSet resultSet = null;
+        Vector vecList = new Vector();
 
         try {
             conn = pool.getConnection();
@@ -150,7 +150,16 @@ public class ReserveManager {
                     "ORDER BY starttime";
 
             Statement stmt = conn.createStatement();
-            resultSet = stmt.executeQuery(mySQL);
+            ResultSet rs = stmt.executeQuery(mySQL);
+
+            while(rs.next()) {
+                ReserveList reserveList = new ReserveList(
+                        rs.getInt("ticketid"), rs.getString("moviename"), rs.getInt("roomnumber"),
+                        rs.getString("theatertype"), rs.getInt("seatrow"), rs.getInt("seatcolumn"),
+                        rs.getString("starttime"), rs.getString("endtime"), rs.getInt("showingid")
+                );
+                vecList.add(reserveList);
+            }
 
             stmt.close();
             conn.close();
@@ -159,7 +168,7 @@ public class ReserveManager {
             System.out.println("Exception" + ex);
             ex.printStackTrace();
         }
-        return resultSet;
+        return vecList;
     }
 
     public int getShowingIDByTicketID(int ticketID) {

@@ -34,15 +34,15 @@ else {
     <tr>
     <%
         for(int column=1; column<=columnCnt; column++) {
-            boolean result = reserveMgr.getReservedState(showingID, row, column);
+            boolean isReserve = reserveMgr.getReservedState(showingID, row, column);
             String seatLink = null;
-            if(result) {
+            if(isReserve) {
+                seatLink = "예약됨";
+            }
+            else {
                 seatLink = "<a href='reserve_verify.jsp?showingID=" + showingID +
                         "&row=" + row + "&column=" + column + "'>" +
                         "[" + row + "," + column + "]</a>";
-            }
-            else {
-                seatLink = "예약됨";
             }
     %>
         <td align="center"><%=seatLink%></td>

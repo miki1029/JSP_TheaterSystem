@@ -30,40 +30,31 @@
 
     <jsp:useBean id="reserveMgr" class="reserveManager.ReserveManager" />
     <%
-        ResultSet myResultSet = reserveMgr.getReserveInfo(Integer.parseInt(session_cid));
+        Vector rvVect = reserveMgr.getReserveInfo(Integer.parseInt(session_cid));
 
-        if(myResultSet != null) {
-            while(myResultSet.next()) {
-                int ticketID = myResultSet.getInt("ticketid");
-                String movieName = myResultSet.getString("moviename");
-                int roomNumber = myResultSet.getInt("roomnumber");
-                String theaterType = myResultSet.getString("theatertype");
-                int seatRow = myResultSet.getInt("seatrow");
-                int seatColumn = myResultSet.getInt("seatcolumn");
-                String startTime = myResultSet.getString("starttime");
-                String endTime = myResultSet.getString("endtime");
-                int showingID = myResultSet.getInt("showingid");
+        for(int i=0; i<rvVect.size(); i++) {
+            ReserveList rvList = (ReserveList)rvVect.elementAt(i);
+            int showingID = rvList.getShowingID();
 
-                // get price
-                Vector pVect = reserveMgr.getPriceInfo(showingID, Integer.parseInt(session_cid));
-                int finalPrice = (Integer) pVect.elementAt(0);
-%>
+            // get price
+            Vector pVect = reserveMgr.getPriceInfo(showingID, Integer.parseInt(session_cid));
+            int finalPrice = (Integer) pVect.elementAt(0);
+    %>
     <tr>
-        <td align="center"><%=ticketID%></td>
-        <td align="center"><%=movieName%></td>
-        <td align="center"><%=theaterType%> <%=roomNumber%>관</td>
-        <td align="center">[<%=seatRow%>,<%=seatColumn%>]</td>
-        <td align="center"><%=startTime%></td>
-        <td align="center"><%=endTime%></td>
+        <td align="center"><%=rvList.getTicketID()%></td>
+        <td align="center"><%=rvList.getMovieName()%></td>
+        <td align="center"><%=rvList.getTheaterType()%> <%=rvList.getRoomNumber()%>관</td>
+        <td align="center">[<%=rvList.getSeatRow()%>,<%=rvList.getSeatColumn()%>]</td>
+        <td align="center"><%=rvList.getStartTime()%></td>
+        <td align="center"><%=rvList.getEndTime()%></td>
         <td align="center"><%=finalPrice%></td>
         <td align="center">
-            <a href="reserve_cancel.jsp?ticketID=<%=ticketID%>">
+            <a href="reserve_cancel.jsp?ticketID=<%=rvList.getTicketID()%>">
                 취소
             </a>
         </td>
     </tr>
 <%
-            }
         }
     }
 %>
