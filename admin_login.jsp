@@ -1,7 +1,7 @@
 <%@ page contentType="text/html; charset=utf-8" pageEncoding="utf-8" %>
 <html>
 <head>
-    <title>로그인</title>
+    <title>WooDrims 영화관</title>
 </head>
 
 <body>

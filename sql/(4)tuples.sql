@@ -24,17 +24,17 @@ insert into SALARY_HISTORY (EmployeeID,SalaryDate,MonthlySalary) values ('15','2
 
 
 INSERT INTO SCREEN_ROOM(RoomNumber, Price, ExitInfo, ScreenSize, TheaterType) VALUES
-(1,14000,'Àü¹æ','21.3x13.5','IMAX');
+(1,14000,'ì „ë°©','21.3x13.5','IMAX');
 INSERT INTO SCREEN_ROOM(RoomNumber, Price, ExitInfo, ScreenSize, TheaterType) VALUES
-(2,14000,'¿ìÃø','17.4x7.4','4dx');
+(2,14000,'ìš°ì¸¡','17.4x7.4','4dx');
 INSERT INTO SCREEN_ROOM(RoomNumber, Price, ExitInfo, ScreenSize, TheaterType) VALUES
-(3,12000,'ÁÂÃø','15x8.1','2d');
+(3,12000,'ì¢Œì¸¡','15x8.1','2d');
 INSERT INTO SCREEN_ROOM(RoomNumber, Price, ExitInfo, ScreenSize, TheaterType) VALUES
-(4,11000,'¿ìÃø','13.1x7','2d');
+(4,11000,'ìš°ì¸¡','13.1x7','2d');
 INSERT INTO SCREEN_ROOM(RoomNumber, Price, ExitInfo, ScreenSize, TheaterType) VALUES
-(5,11000,'ÁÂÃø','13.1x7','2d');
+(5,11000,'ì¢Œì¸¡','13.1x7','2d');
 
------------·ë³Ñ¹ö¹Ù²Þ-------------------
+-----------ë£¸ë„˜ë²„ë°”ê¿ˆ-------------------
 
 
 insert into seats (RoomNumber,SeatRow,SeatColumn,SeatType) values('1','1','1','couple');
@@ -45,87 +45,87 @@ insert into seats (RoomNumber,SeatRow,SeatColumn,SeatType) values('5','1','4','s
 
 
 
----------------¹«ºñ½º¾ÆÀÌµð´Â 300000´ëÀÌ´Ù------------------
+---------------ë¬´ë¹„ìŠ¤ì•„ì´ë””ëŠ” 300000ëŒ€ì´ë‹¤------------------
 
 
 
 INSERT INTO MOVIES
 (MovieID, MovieName, Director, MainActor, Synopsis, RunningTime, MovieGrade, ReleasedDate, ExpiredDate) 
-VALUES (30001,'»÷ ¾Èµå·¹¾Æ½º','ºê·¹µå ÆäÀÌÆ°','µå¿þÀÎ Á¸½¼',
-'»÷ ¾Èµå·¹¾Æ½º ´ÜÃþÀÌ ¸¶Ä§³» ²÷¾îÁ® ±Ô¸ð 9ÀÇ °­ÁøÀÌ ¹ß»ýÇÏÀÚ
-±¸Á¶Çï±â Á¶Á¾»ç µå¿þÀÎ Á¸½¼Àº »çÀÌ°¡ ¸Ö¾îÁø ¾Æ³»¿Í ÇÔ²²
-¿Üµ¿µþÀ» ±¸ÇÏ±â À§ÇØ ÃÖ¾ÇÀÇ »óÈ² ¼ÓÀ¸·Î ¶Ù¾îµç´Ù.
-¼¼»óÀÌ ¹«³ÊÁö´Â ¸¶Áö¸· ¼ø°£, 
-´ç½ÅÀº ¾îµð¿¡¼­ ´©±¸¿Í ÇÔ²² ÇÒ °ÍÀÎ°¡!',114,12,
+VALUES (30001,'ìƒŒ ì•ˆë“œë ˆì•„ìŠ¤','ë¸Œë ˆë“œ íŽ˜ì´íŠ¼','ë“œì›¨ì¸ ì¡´ìŠ¨',
+'ìƒŒ ì•ˆë“œë ˆì•„ìŠ¤ ë‹¨ì¸µì´ ë§ˆì¹¨ë‚´ ëŠì–´ì ¸ ê·œëª¨ 9ì˜ ê°•ì§„ì´ ë°œìƒí•˜ìž
+êµ¬ì¡°í—¬ê¸° ì¡°ì¢…ì‚¬ ë“œì›¨ì¸ ì¡´ìŠ¨ì€ ì‚¬ì´ê°€ ë©€ì–´ì§„ ì•„ë‚´ì™€ í•¨ê»˜
+ì™¸ë™ë”¸ì„ êµ¬í•˜ê¸° ìœ„í•´ ìµœì•…ì˜ ìƒí™© ì†ìœ¼ë¡œ ë›°ì–´ë“ ë‹¤.
+ì„¸ìƒì´ ë¬´ë„ˆì§€ëŠ” ë§ˆì§€ë§‰ ìˆœê°„, 
+ë‹¹ì‹ ì€ ì–´ë””ì—ì„œ ëˆ„êµ¬ì™€ í•¨ê»˜ í•  ê²ƒì¸ê°€!',114,12,
 TO_DATE('2015-06-03 00:00:00', 'yyyy-mm-dd hh24:mi:ss'),
 TO_DATE('2015-08-03 00:00:00', 'yyyy-mm-dd hh24:mi:ss'));
 
 INSERT INTO MOVIES 
 (MovieID, MovieName, Director, MainActor, Synopsis, RunningTime, MovieGrade, ReleasedDate, ExpiredDate)
-VALUES (30002,'½ºÆÄÀÌ','Æú ÆäÀÌ±×','ÁÖµå ·Î',
-'ÇöÀå ¿ä¿øµéÀÇ ÀÓ¹« ¼öÇàÀ» µ½´Â CIAÀÇ ³»±Ù ¿ä¿ø ¼öÀÜ ÄíÆÛ(¸á¸®»ç ¸ÆÄ«½Ã).
-¿Ü¸ð, ÀÓ¹« ¼öÇà µî ¿Ïº®ÇÑ ÃÖ°íÀÇ ¿ä¿ø ºê·¡µé¸® ÆÄÀÎ(ÁÖµå ·Î)ÀÇ ÆÄÆ®³Ê·Î
-ÀÓ¹«¸¦ ¼öÇàÀ» ÇÏ´ø Áß, ÇÙ¹«±â ¹Ð°Å·¡¸¦ ÃßÁøÇÏ´Â ¸¶ÇÇ¾Æµé¿¡°Ô CIA ÇöÀå
-¿ä¿øµéÀÇ ½ÅºÐÀÌ ¸ðµÎ ³ëÃâµÇ´Â »ç°ÇÀÌ ¹ß»ýÇÑ´Ù. ¸¶ÇÇ¾ÆµéÀÌ ¸ð¸£´Â ³»±Ù ¿ä¿ø
-¼öÀÜÀº CIAÀÇ ÃÖ´ë À§±â¸¦ ±Øº¹ÇÏ°í ÇÙ¹«±âÀÇ ¹Ð°Å·¡¸¦ ¸·±â À§ÇØ ÇöÀå¿¡ ÅõÀÔµÈ´Ù.
-±×·¯³ª, ±×³à¸¦ ¸ø ¹Ï´Â ¡®ÀÚÄª¡¯ ÃÖ°íÀÇ ¿ä¿ø ¸¯ Æ÷µå(Á¦ÀÌ½¼ ½ºÅ¸µ©)°¡ ±×³à¿Í º°°³·Î
-ÀÓ¹«¸¦ ¼öÇàÇÏ¸é¼­ ±×³àÀÇ ¹Ì¼ÇÀº À§±â¿¡ Á÷¸éÇÏ°Ô µÇ´Âµ¥¡¦',122,15,
+VALUES (30002,'ìŠ¤íŒŒì´','í´ íŽ˜ì´ê·¸','ì£¼ë“œ ë¡œ',
+'í˜„ìž¥ ìš”ì›ë“¤ì˜ ìž„ë¬´ ìˆ˜í–‰ì„ ë•ëŠ” CIAì˜ ë‚´ê·¼ ìš”ì› ìˆ˜ìž” ì¿ í¼(ë©œë¦¬ì‚¬ ë§¥ì¹´ì‹œ).
+ì™¸ëª¨, ìž„ë¬´ ìˆ˜í–‰ ë“± ì™„ë²½í•œ ìµœê³ ì˜ ìš”ì› ë¸Œëž˜ë“¤ë¦¬ íŒŒì¸(ì£¼ë“œ ë¡œ)ì˜ íŒŒíŠ¸ë„ˆë¡œ
+ìž„ë¬´ë¥¼ ìˆ˜í–‰ì„ í•˜ë˜ ì¤‘, í•µë¬´ê¸° ë°€ê±°ëž˜ë¥¼ ì¶”ì§„í•˜ëŠ” ë§ˆí”¼ì•„ë“¤ì—ê²Œ CIA í˜„ìž¥
+ìš”ì›ë“¤ì˜ ì‹ ë¶„ì´ ëª¨ë‘ ë…¸ì¶œë˜ëŠ” ì‚¬ê±´ì´ ë°œìƒí•œë‹¤. ë§ˆí”¼ì•„ë“¤ì´ ëª¨ë¥´ëŠ” ë‚´ê·¼ ìš”ì›
+ìˆ˜ìž”ì€ CIAì˜ ìµœëŒ€ ìœ„ê¸°ë¥¼ ê·¹ë³µí•˜ê³  í•µë¬´ê¸°ì˜ ë°€ê±°ëž˜ë¥¼ ë§‰ê¸° ìœ„í•´ í˜„ìž¥ì— íˆ¬ìž…ëœë‹¤.
+ê·¸ëŸ¬ë‚˜, ê·¸ë…€ë¥¼ ëª» ë¯¿ëŠ” â€˜ìžì¹­â€™ ìµœê³ ì˜ ìš”ì› ë¦­ í¬ë“œ(ì œì´ìŠ¨ ìŠ¤íƒ€ëŽ€)ê°€ ê·¸ë…€ì™€ ë³„ê°œë¡œ
+ìž„ë¬´ë¥¼ ìˆ˜í–‰í•˜ë©´ì„œ ê·¸ë…€ì˜ ë¯¸ì…˜ì€ ìœ„ê¸°ì— ì§ë©´í•˜ê²Œ ë˜ëŠ”ë°â€¦',122,15,
 TO_DATE('2015-05-21 00:00:00', 'yyyy-mm-dd hh24:mi:ss'),
 TO_DATE('2015-07-21 00:00:00', 'yyyy-mm-dd hh24:mi:ss'));
 
 INSERT INTO MOVIES 
 (MovieID, MovieName, Director, MainActor, Synopsis, RunningTime, MovieGrade, ReleasedDate, ExpiredDate)
-VALUES (30003,'Àº¹ÐÇÑ À¯È¤','À±Àç±¸','ÀÓ¼öÁ¤',
-'¹Ï¾ú´ø Ä£±¸¿¡°Ô ¹è½Å ´çÇÏ°í »çÃ¤¾÷ÀÚµé¿¡°Ô ÂÑ±â¸ç ÇÏ·çÇÏ·ç Èñ¸ÁÀ» ÀÒ¾î°¡´ø ¡®Áö¿¬¡¯(ÀÓ¼öÁ¤). 
-±×·± ±×³à ¾Õ¿¡ Àþ°í À¯´ÉÇÑ ºñ¼­ ¡®¼º¿­¡¯(À¯¿¬¼®)ÀÌ ³ªÅ¸³ª ±×³àÀÇ ÀÎ»ýÀ» ¹Ù²Ü °Å´ëÇÑ Á¦¾ÈÀ» ÇÑ´Ù. 
-±× Á¦¾ÈÀº ¹Ù·Î Ãµ¹®ÇÐÀûÀÎ Àç»êÀ» ¼ÒÀ¯ÇÑ ¸¶Ä«¿À Ä«Áö³ë ±×·ìÀÇ ¡®È¸Àå¡¯(ÀÌ°æ¿µ)À» »ç·ÎÀâ¾Æ 
-±×ÀÇ Àü Àç»êÀ» »ó¼Ó¹Þ´Â °Í. ´Ü, ¼º°ø ½Ã ±× Àç»êÀÇ Àý¹ÝÀ» ±×¿Í ³ª´©´Â °ÍÀ» Á¶°ÇÀ¸·Î ³»°Ç´Ù.
-´ÞÄÞÇÑ ¸¸Å­ À§ÇèÇÑ Á¦¾ÈÀÌÁö¸¸ ¸Å·ÂÀûÀÎ ¼º¿­¿¡°Ô °­ÇÑ ²ø¸²À» ´À³¤ Áö¿¬Àº ¸¶Ä§³» È¸ÀåÀÇ 
-È£È­ ¿äÆ®¿¡ ¿À¸¥´Ù. ¼¼ »ç¶÷ »çÀÌ¿¡ °¨µµ´Â ¹Ì¹¦ÇÑ ±äÀå°ú ÀÇ½É ¼Ó¿¡¼­ ¼øÁ¶·Ó°Ô ÁøÇà µÇ´ø °èÈ¹Àº, 
-È¸ÀåÀÇ °©ÀÛ½º·¯¿î Á×À½À¸·Î ¾î±ß³ª°Ô µÇ´Âµ¥¡¦',110,15,
+VALUES (30003,'ì€ë°€í•œ ìœ í˜¹','ìœ¤ìž¬êµ¬','ìž„ìˆ˜ì •',
+'ë¯¿ì—ˆë˜ ì¹œêµ¬ì—ê²Œ ë°°ì‹  ë‹¹í•˜ê³  ì‚¬ì±„ì—…ìžë“¤ì—ê²Œ ì«“ê¸°ë©° í•˜ë£¨í•˜ë£¨ í¬ë§ì„ ìžƒì–´ê°€ë˜ â€˜ì§€ì—°â€™(ìž„ìˆ˜ì •). 
+ê·¸ëŸ° ê·¸ë…€ ì•žì— ì Šê³  ìœ ëŠ¥í•œ ë¹„ì„œ â€˜ì„±ì—´â€™(ìœ ì—°ì„)ì´ ë‚˜íƒ€ë‚˜ ê·¸ë…€ì˜ ì¸ìƒì„ ë°”ê¿€ ê±°ëŒ€í•œ ì œì•ˆì„ í•œë‹¤. 
+ê·¸ ì œì•ˆì€ ë°”ë¡œ ì²œë¬¸í•™ì ì¸ ìž¬ì‚°ì„ ì†Œìœ í•œ ë§ˆì¹´ì˜¤ ì¹´ì§€ë…¸ ê·¸ë£¹ì˜ â€˜íšŒìž¥â€™(ì´ê²½ì˜)ì„ ì‚¬ë¡œìž¡ì•„ 
+ê·¸ì˜ ì „ ìž¬ì‚°ì„ ìƒì†ë°›ëŠ” ê²ƒ. ë‹¨, ì„±ê³µ ì‹œ ê·¸ ìž¬ì‚°ì˜ ì ˆë°˜ì„ ê·¸ì™€ ë‚˜ëˆ„ëŠ” ê²ƒì„ ì¡°ê±´ìœ¼ë¡œ ë‚´ê±´ë‹¤.
+ë‹¬ì½¤í•œ ë§Œí¼ ìœ„í—˜í•œ ì œì•ˆì´ì§€ë§Œ ë§¤ë ¥ì ì¸ ì„±ì—´ì—ê²Œ ê°•í•œ ëŒë¦¼ì„ ëŠë‚€ ì§€ì—°ì€ ë§ˆì¹¨ë‚´ íšŒìž¥ì˜ 
+í˜¸í™” ìš”íŠ¸ì— ì˜¤ë¥¸ë‹¤. ì„¸ ì‚¬ëžŒ ì‚¬ì´ì— ê°ë„ëŠ” ë¯¸ë¬˜í•œ ê¸´ìž¥ê³¼ ì˜ì‹¬ ì†ì—ì„œ ìˆœì¡°ë¡­ê²Œ ì§„í–‰ ë˜ë˜ ê³„íšì€, 
+íšŒìž¥ì˜ ê°‘ìž‘ìŠ¤ëŸ¬ìš´ ì£½ìŒìœ¼ë¡œ ì–´ê¸‹ë‚˜ê²Œ ë˜ëŠ”ë°â€¦',110,15,
 TO_DATE('2015-06-04 00:00:00', 'yyyy-mm-dd hh24:mi:ss'),
 TO_DATE('2015-08-04 00:00:00', 'yyyy-mm-dd hh24:mi:ss'));
 
 INSERT INTO MOVIES
 (MovieID, MovieName, Director, MainActor, Synopsis, RunningTime, MovieGrade, ReleasedDate, ExpiredDate)
-VALUES (30004,'¹«·ÚÇÑ','¿À½Â¿í','Àüµµ¿¬',
-'¹üÀÎÀ» Àâ±â À§ÇØ¼± ¾î¶² ¼ö´ÜÀÌµç ´Ù ¾µ ¼ö ÀÖ´Â Çü»ç Á¤Àç°ï(±è³²±æ).
-±×´Â »ç¶÷À» Á×ÀÌ°í ÀáÀûÇÑ ¹ÚÁØ±æ(¹Ú¼º¿õ)À» ÂÑ°í ÀÖ´Ù. ±×¸¦ ÀâÀ» ¼ö ÀÖ´Â À¯ÀÏÇÑ ½Ç¸¶¸®´Â
-¹ÚÁØ±æÀÇ ¾ÖÀÎÀÎ ±èÇý°æ(Àüµµ¿¬). Àç°ïÀº Á¤Ã¼¸¦ ¼û±ä Ã¤ Çý°æÀÌ ÀÏÇÏ°í ÀÖ´Â ´Ü¶õÁÖÁ¡ ¸¶Ä«¿ÀÀÇ
-¿µ¾÷»ó¹«·Î µé¾î°£´Ù. ÇÏÁö¸¸, Àç°ïÀº ÁØ±æÀ» Àâ±â À§ÇØ Çý°æ °ç¿¡ ¸Ó¹«´Â »çÀÌ ÅðÆóÀûÀÌ°í °­ÇØ
-º¸ÀÌ´Â ¼úÁý ¿©ÀÚÀÇ ¿Ü¸é µÚ¿¡ ÀÚ¸®ÇÑ Çý°æÀÇ ¿Ü·Î¿ò°ú ´«¹°, ¼ø¼öÇÔÀ» ´À³¤´Ù. ¿ÀÁ÷ ¹üÀÎÀ» Àâ´Â´Ù´Â
-¸ñÇ¥¿¡ Áßµ¶µÇ¾î ÀÖ¾ú´ø ±×´Â ÀÚ±â °¨Á¤ÀÇ Á¤Ã¼µµ ¸ð¸¥ Ã¤ ¸¶À½ÀÌ Èçµé¸°´Ù. ±×¸®°í ¾ðÁ¦ ¿¬¶ôÀÌ
-¿Ã Áöµµ ¸ð¸£´Â ÁØ±æÀ» ±â´Ù¸®´ø Çý°æÀº, 
-ÀÚ±â ¿·¿¡ ÀÖ¾îÁÖ´Â ±×¿¡°Ô ¸¶À½À» ¿­±â ½ÃÀÛÇÑ´Ù.',118,19,
+VALUES (30004,'ë¬´ë¢°í•œ','ì˜¤ìŠ¹ìš±','ì „ë„ì—°',
+'ë²”ì¸ì„ ìž¡ê¸° ìœ„í•´ì„  ì–´ë–¤ ìˆ˜ë‹¨ì´ë“  ë‹¤ ì“¸ ìˆ˜ ìžˆëŠ” í˜•ì‚¬ ì •ìž¬ê³¤(ê¹€ë‚¨ê¸¸).
+ê·¸ëŠ” ì‚¬ëžŒì„ ì£½ì´ê³  ìž ì í•œ ë°•ì¤€ê¸¸(ë°•ì„±ì›…)ì„ ì«“ê³  ìžˆë‹¤. ê·¸ë¥¼ ìž¡ì„ ìˆ˜ ìžˆëŠ” ìœ ì¼í•œ ì‹¤ë§ˆë¦¬ëŠ”
+ë°•ì¤€ê¸¸ì˜ ì• ì¸ì¸ ê¹€í˜œê²½(ì „ë„ì—°). ìž¬ê³¤ì€ ì •ì²´ë¥¼ ìˆ¨ê¸´ ì±„ í˜œê²½ì´ ì¼í•˜ê³  ìžˆëŠ” ë‹¨ëž€ì£¼ì  ë§ˆì¹´ì˜¤ì˜
+ì˜ì—…ìƒë¬´ë¡œ ë“¤ì–´ê°„ë‹¤. í•˜ì§€ë§Œ, ìž¬ê³¤ì€ ì¤€ê¸¸ì„ ìž¡ê¸° ìœ„í•´ í˜œê²½ ê³ì— ë¨¸ë¬´ëŠ” ì‚¬ì´ í‡´íì ì´ê³  ê°•í•´
+ë³´ì´ëŠ” ìˆ ì§‘ ì—¬ìžì˜ ì™¸ë©´ ë’¤ì— ìžë¦¬í•œ í˜œê²½ì˜ ì™¸ë¡œì›€ê³¼ ëˆˆë¬¼, ìˆœìˆ˜í•¨ì„ ëŠë‚€ë‹¤. ì˜¤ì§ ë²”ì¸ì„ ìž¡ëŠ”ë‹¤ëŠ”
+ëª©í‘œì— ì¤‘ë…ë˜ì–´ ìžˆì—ˆë˜ ê·¸ëŠ” ìžê¸° ê°ì •ì˜ ì •ì²´ë„ ëª¨ë¥¸ ì±„ ë§ˆìŒì´ í”ë“¤ë¦°ë‹¤. ê·¸ë¦¬ê³  ì–¸ì œ ì—°ë½ì´
+ì˜¬ ì§€ë„ ëª¨ë¥´ëŠ” ì¤€ê¸¸ì„ ê¸°ë‹¤ë¦¬ë˜ í˜œê²½ì€, 
+ìžê¸° ì˜†ì— ìžˆì–´ì£¼ëŠ” ê·¸ì—ê²Œ ë§ˆìŒì„ ì—´ê¸° ì‹œìž‘í•œë‹¤.',118,19,
 TO_DATE('2015-05-27 00:00:00', 'yyyy-mm-dd hh24:mi:ss'),
 TO_DATE('2015-07-27 00:00:00', 'yyyy-mm-dd hh24:mi:ss'));
 
 INSERT INTO MOVIES
 (MovieID, MovieName, Director, MainActor, Synopsis, RunningTime, MovieGrade, ReleasedDate, ExpiredDate)
-VALUES (30005,'¸Åµå¸Æ½º','Á¶Áö ¹Ð·¯','Åè ÇÏµð',
-'¸ðµÎ°¡ ¿ì·ÁÇÏ´ø ÀÏÀÌ Çö½ÇÀÌ µÆ´Ù. 
-¼¼°è °¢±¹ÀÇ ÀÌ±Ç ´ÙÅù°ú °¥µîÀÌ ±ØÀ¸·Î Ä¡´Þ¾Æ ÅëÁ¦ ºÒ´ÉÀÇ ÀüÀïÀ¸·Î ÀÌ¾îÁ³°í 
-Áö±¸»ó¿¡ ÀÖ´ø ¸ðµç ÇÙ¹«±â°¡ ¸ðµÎ ÅÍÁ®¹ö·È´Ù. ±×¸®°í ¸¶Ä§³» 21¼¼±â ¸», ÀÎ·ù´Â ¸ê¸ÁÇß´Ù. 
-»ì¾Æ³²Àº ÀÎ·ù´Â ¹°°ú ±â¸§À» Áö¹èÇÏ´Â µ¶ÀçÀÚ ÀÓ¸ðÅº Á¶ÀÇ Áö¹è ¾Æ·¡ Ã´¹ÚÇÑ »îÀ» ¿µÀ§ÇÑ´Ù. 
-ÇÑÆí, ¾Æ³»¿Í µþÀ» ÀÒ°í »ì¾Æ³²±â À§ÇØ »ç¸·À» ¶°µ¹´ø ¸Æ½º(Åè ÇÏµð)´Â ÀÓ¸ðÅºÀÇ ºÎÇÏµé¿¡°Ô ³³Ä¡µÇ¾î 
-³ë¿¹·Î ²ø·Á°¡°í, ÆøÁ¤¿¡ ¹Ý¹ßÇÑ »ç·É°ü Ç»¸®¿À»ç(»þ¸¦¸®Áî Å×·Ð)´Â Áö¹èÃ¼Á¦¸¦ ºØ±«½ÃÅ°±â À§ÇØ 
-ÀÎ·ù »ýÁ¸ÀÇ ¿­¼è¸¦ Áå ÀÓ¸ðÅºÀÇ ¿©ÀÎµéÀ» Å»ÃëÇØ ºÐ³ëÀÇ µµ·Î·Î ÆøÁÖÇÑ´Ù. ÀÌ¿¡ ÀÓ¸ðÅºÀÇ Àü»çÀÎ ½ÅÀÎ·ù 
-´ª½º(´ÏÄÝ¶ó½º È¦Æ®)´Â ¸Æ½º¸¦ ÀÌ²ø°í Ç»¸®¿À»çÀÇ µÚ¸¦ ÂÑ´Âµ¥... 
-³¡³»ÁÖ´Â ³¯, ³¡³»ÁÖ´Â ¾×¼ÇÀÌ Æø·ÄÇÑ´Ù!',120,15,
+VALUES (30005,'ë§¤ë“œë§¥ìŠ¤','ì¡°ì§€ ë°€ëŸ¬','í†° í•˜ë””',
+'ëª¨ë‘ê°€ ìš°ë ¤í•˜ë˜ ì¼ì´ í˜„ì‹¤ì´ ëë‹¤. 
+ì„¸ê³„ ê°êµ­ì˜ ì´ê¶Œ ë‹¤íˆ¼ê³¼ ê°ˆë“±ì´ ê·¹ìœ¼ë¡œ ì¹˜ë‹¬ì•„ í†µì œ ë¶ˆëŠ¥ì˜ ì „ìŸìœ¼ë¡œ ì´ì–´ì¡Œê³  
+ì§€êµ¬ìƒì— ìžˆë˜ ëª¨ë“  í•µë¬´ê¸°ê°€ ëª¨ë‘ í„°ì ¸ë²„ë ¸ë‹¤. ê·¸ë¦¬ê³  ë§ˆì¹¨ë‚´ 21ì„¸ê¸° ë§, ì¸ë¥˜ëŠ” ë©¸ë§í–ˆë‹¤. 
+ì‚´ì•„ë‚¨ì€ ì¸ë¥˜ëŠ” ë¬¼ê³¼ ê¸°ë¦„ì„ ì§€ë°°í•˜ëŠ” ë…ìž¬ìž ìž„ëª¨íƒ„ ì¡°ì˜ ì§€ë°° ì•„ëž˜ ì²™ë°•í•œ ì‚¶ì„ ì˜ìœ„í•œë‹¤. 
+í•œíŽ¸, ì•„ë‚´ì™€ ë”¸ì„ ìžƒê³  ì‚´ì•„ë‚¨ê¸° ìœ„í•´ ì‚¬ë§‰ì„ ë– ëŒë˜ ë§¥ìŠ¤(í†° í•˜ë””)ëŠ” ìž„ëª¨íƒ„ì˜ ë¶€í•˜ë“¤ì—ê²Œ ë‚©ì¹˜ë˜ì–´ 
+ë…¸ì˜ˆë¡œ ëŒë ¤ê°€ê³ , í­ì •ì— ë°˜ë°œí•œ ì‚¬ë ¹ê´€ í“¨ë¦¬ì˜¤ì‚¬(ìƒ¤ë¥¼ë¦¬ì¦ˆ í…Œë¡ )ëŠ” ì§€ë°°ì²´ì œë¥¼ ë¶•ê´´ì‹œí‚¤ê¸° ìœ„í•´ 
+ì¸ë¥˜ ìƒì¡´ì˜ ì—´ì‡ ë¥¼ ì¥” ìž„ëª¨íƒ„ì˜ ì—¬ì¸ë“¤ì„ íƒˆì·¨í•´ ë¶„ë…¸ì˜ ë„ë¡œë¡œ í­ì£¼í•œë‹¤. ì´ì— ìž„ëª¨íƒ„ì˜ ì „ì‚¬ì¸ ì‹ ì¸ë¥˜ 
+ëˆ…ìŠ¤(ë‹ˆì½œë¼ìŠ¤ í™€íŠ¸)ëŠ” ë§¥ìŠ¤ë¥¼ ì´ëŒê³  í“¨ë¦¬ì˜¤ì‚¬ì˜ ë’¤ë¥¼ ì«“ëŠ”ë°... 
+ëë‚´ì£¼ëŠ” ë‚ , ëë‚´ì£¼ëŠ” ì•¡ì…˜ì´ í­ë ¬í•œë‹¤!',120,15,
 TO_DATE('2015-05-14 00:00:00', 'yyyy-mm-dd hh24:mi:ss'),
 TO_DATE('2015-07-14 00:00:00', 'yyyy-mm-dd hh24:mi:ss'));
 
 
 INSERT INTO GENRE VALUES
-(11,'µå¶ó¸¶');
+(11,'ë“œë¼ë§ˆ');
 INSERT INTO GENRE VALUES
-(22,'¾×¼Ç');
+(22,'ì•¡ì…˜');
 INSERT INTO GENRE VALUES
-(33,'¹üÁË');
+(33,'ë²”ì£„');
 INSERT INTO GENRE VALUES
-(44,'·Î¸Ç½º');
+(44,'ë¡œë§¨ìŠ¤');
 INSERT INTO GENRE VALUES
-(55,'¾×¼Ç');
+(55,'ì•¡ì…˜');
 
 
 
@@ -199,19 +199,19 @@ INSERT INTO CUSTOMERS(CustomerID, PhoneNumber, GradeID) VALUES (10006,'010-0000-
 
 
 INSERT INTO MEMBERS(CustomerID, ID, Password, Name, Sex, Birthdate, Email, RegisterDate, Point)
-VALUES (10001,'park12','p1234','¹Ú°æÇý','f',to_date('13-9-1992','dd-mm-yyyy'),
+VALUES (10001,'park12','p1234','ë°•ê²½í˜œ','f',to_date('13-9-1992','dd-mm-yyyy'),
 'park12@gmail.com',to_date('13-5-2015','dd-mm-yyyy'),1100);
 INSERT INTO MEMBERS(CustomerID, ID, Password, Name, Sex, Birthdate, Email, RegisterDate, Point)
-VALUES (10002,'kim09','k1234','±è¹Î¿ì','m',to_date('29-10-1990','dd-mm-yyyy'),
+VALUES (10002,'kim09','k1234','ê¹€ë¯¼ìš°','m',to_date('29-10-1990','dd-mm-yyyy'),
 'kim09@gmail.com',to_date('14-5-2015','dd-mm-yyyy'),700);
 INSERT INTO MEMBERS(CustomerID, ID, Password, Name, Sex, Birthdate, Email, RegisterDate, Point)
-VALUES (10003,'lee10','l1234','ÀÌ»ó¿ì','m',to_date('30-12-1991','dd-mm-yyyy'),
+VALUES (10003,'lee10','l1234','ì´ìƒìš°','m',to_date('30-12-1991','dd-mm-yyyy'),
 'lee10@gmail.com',to_date('17-5-2015','dd-mm-yyyy'),700);
 INSERT INTO MEMBERS(CustomerID, ID, Password, Name, Sex, Birthdate, Email, RegisterDate, Point)
-VALUES (10004,'choi13','c1234','ÃÖÁö¿ø','f',to_date('13-8-1994','dd-mm-yyyy'),
+VALUES (10004,'choi13','c1234','ìµœì§€ì›','f',to_date('13-8-1994','dd-mm-yyyy'),
 'choi13@gmail.com',to_date('20-5-2015','dd-mm-yyyy'),600);
 INSERT INTO MEMBERS(CustomerID, ID, Password, Name, Sex, Birthdate, Email, RegisterDate, Point)
-VALUES (10005,'nam13','n1234','³²ÁÖÇõ','m',to_date('22-2-1994','dd-mm-yyyy'),
+VALUES (10005,'nam13','n1234','ë‚¨ì£¼í˜','m',to_date('22-2-1994','dd-mm-yyyy'),
 'nam13@gmail.com',to_date('24-5-2015','dd-mm-yyyy'),400);
 
 

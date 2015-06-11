@@ -1,4 +1,4 @@
-<%@ page import="java.sql.*, java.util.*, reserveManager.*" %>
+<%@ page import="java.sql.*, java.util.*, woodrimsTheater.*" %>
 <%@ page contentType="text/html; charset=utf-8" pageEncoding="utf-8" %>
 <html>
 <head>
@@ -28,12 +28,12 @@
         <th>취소</th>
     </tr>
 
-    <jsp:useBean id="reserveMgr" class="reserveManager.ReserveManager" />
+    <jsp:useBean id="reserveMgr" class="woodrimsTheater.ReserveManager" />
     <%
         Vector rvVect = reserveMgr.getReserveInfo(Integer.parseInt(session_cid));
 
         for(int i=0; i<rvVect.size(); i++) {
-            ReserveList rvList = (ReserveList)rvVect.elementAt(i);
+            ReserveInfo rvList = (ReserveInfo)rvVect.elementAt(i);
             int showingID = rvList.getShowingID();
 
             // get price
@@ -43,7 +43,7 @@
     <tr>
         <td align="center"><%=rvList.getTicketID()%></td>
         <td align="center"><%=rvList.getMovieName()%></td>
-        <td align="center"><%=rvList.getTheaterType()%> <%=rvList.getRoomNumber()%>관</td>
+        <td align="center"><%=rvList.getRoomName()%></td>
         <td align="center">[<%=rvList.getSeatRow()%>,<%=rvList.getSeatColumn()%>]</td>
         <td align="center"><%=rvList.getStartTime()%></td>
         <td align="center"><%=rvList.getEndTime()%></td>

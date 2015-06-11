@@ -1,4 +1,4 @@
-<%@ page import="java.sql.*, java.util.*, reserveManager.*" %>
+<%@ page import="java.sql.*, java.util.*, woodrimsTheater.*" %>
 <%@ page contentType="text/html; charset=utf-8" pageEncoding="utf-8" %>
 <html>
 <head>
@@ -6,7 +6,7 @@
 </head>
 <body>
 <%@ include file="top.jsp" %>
-<jsp:useBean id="reserveMgr" class="reserveManager.ReserveManager" />
+<jsp:useBean id="reserveMgr" class="woodrimsTheater.ReserveManager" />
 <%
     int showingID = Integer.parseInt(request.getParameter("showingID"));
     int row = Integer.parseInt(request.getParameter("row"));

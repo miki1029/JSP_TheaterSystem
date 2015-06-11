@@ -1,6 +1,4 @@
-package reserveManager;
-
-import oracle.jdbc.pool.OracleConnectionPoolDataSource;
+package woodrimsTheater;
 
 import javax.sql.PooledConnection;
 import java.sql.CallableStatement;
@@ -11,23 +9,50 @@ import java.util.Vector;
 
 public class ReserveManager {
 
-    private OracleConnectionPoolDataSource ocpds = null;
     private PooledConnection pool = null;
 
     public ReserveManager() {
-        try{
-            // Create a OracleConnectionPoolDataSorce instance
-            ocpds = new OracleConnectionPoolDataSource();
-            // Set connection parameters
-            ocpds.setURL("jdbc:oracle:thin:@210.94.199.20:1521:DBLAB");
-            ocpds.setUser("ST2009111979");
-            ocpds.setPassword("ST2009111979");
-            // Create a pooled connection
-            pool = ocpds.getPooledConnection();
-        } catch (Exception e) {
-            System.out.println("Error : Connection Failed");
-            e.printStackTrace();
+        DBConnection dbConnection = DBConnection.getInstance();
+        pool = dbConnection.getPool();
+    }
+
+    public Vector getShowingInfo() {
+        Connection conn = null;
+        Vector vecList = new Vector();
+
+        try {
+            conn = pool.getConnection();
+
+            String mySQL = "SELECT si.ShowingID, m.MovieName, " +
+                    "TO_CHAR(si.starttime,'YYYY/MM/DD HH24:MI:SS') StartTime, " +
+                    "TO_CHAR(si.endtime,'YYYY/MM/DD HH24:MI:SS') EndTime, " +
+                    "sm.TheaterType, sm.RoomNumber " +
+                    "FROM SHOWING_INFO si " +
+                    "INNER JOIN MOVIES m ON (si.MovieID = m.MovieID) " +
+                    "INNER JOIN SCREEN_ROOM sm ON (si.RoomNumber = sm.RoomNumber) " +
+                    //"WHERE " +
+                    "ORDER BY StartTime";
+
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery(mySQL);
+
+            while(rs.next()) {
+                ShowingInfo showingInfo = new ShowingInfo(
+                        rs.getInt("ShowingID"), rs.getString("MovieName"),
+                        rs.getString("StartTime"), rs.getString("EndTime"),
+                        rs.getString("TheaterType"), rs.getInt("RoomNumber")
+                );
+                vecList.add(showingInfo);
+            }
+
+            stmt.close();
+            conn.close();
+
+        } catch (Exception ex) {
+            System.out.println("Exception" + ex);
+            ex.printStackTrace();
         }
+        return vecList;
     }
 
     public Vector getRoomSeatsRowColumn(int showingID) {
@@ -138,27 +163,28 @@ public class ReserveManager {
             conn = pool.getConnection();
 
             String mySQL =
-                    "SELECT ticketid, moviename, roomnumber, theatertype, seatrow, seatcolumn, " +
-                    "TO_CHAR(si.starttime,'YYYY/MM/DD HH24:MI:SS') starttime, " +
-                    "TO_CHAR(si.endtime,'YYYY/MM/DD HH24:MI:SS') endtime, " +
-                    "si.showingid, t.customerid " +
+                    "SELECT TicketID, SeatRow, SeatColumn, MovieName, RoomNumber, TheaterType, " +
+                    "TO_CHAR(si.starttime,'YYYY/MM/DD HH24:MI:SS') StartTime, " +
+                    "TO_CHAR(si.endtime,'YYYY/MM/DD HH24:MI:SS') EndTime, " +
+                    "si.ShowingID, t.CustomerID " +
                     "FROM TICKET t " +
                     "INNER JOIN SHOWING_INFO si ON (t.ShowingID = si.ShowingID) " +
                     "INNER JOIN SCREEN_ROOM sm ON (si.RoomNumber = sm.RoomNumber) " +
                     "INNER JOIN MOVIES m ON (si.MovieID = m.MovieID) " +
-                    "WHERE customerid = " + customerID + " " +
-                    "ORDER BY starttime";
+                    "WHERE CustomerID = " + customerID + " " +
+                    "ORDER BY StartTime";
 
             Statement stmt = conn.createStatement();
             ResultSet rs = stmt.executeQuery(mySQL);
 
             while(rs.next()) {
-                ReserveList reserveList = new ReserveList(
-                        rs.getInt("ticketid"), rs.getString("moviename"), rs.getInt("roomnumber"),
-                        rs.getString("theatertype"), rs.getInt("seatrow"), rs.getInt("seatcolumn"),
-                        rs.getString("starttime"), rs.getString("endtime"), rs.getInt("showingid")
+                ReserveInfo reserveInfo = new ReserveInfo(
+                        rs.getInt("TicketID"), rs.getInt("SeatRow"), rs.getInt("SeatColumn"),
+                        rs.getInt("ShowingID"), rs.getString("MovieName"),
+                        rs.getString("StartTime"), rs.getString("EndTime"),
+                        rs.getString("TheaterType"), rs.getInt("RoomNumber")
                 );
-                vecList.add(reserveList);
+                vecList.add(reserveInfo);
             }
 
             stmt.close();
